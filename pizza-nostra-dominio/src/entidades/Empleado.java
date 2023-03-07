@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,10 +30,13 @@ public class Empleado implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToMany(mappedBy = "horario")
+    //@OneToMany(mappedBy = "horario", cascade = CascadeType.PERSIST) 
+    //@OneToMany
+    @JoinColumn(name = "id_horario", nullable = false)
     private List<Horario> horarios;
     
-    @OneToMany(mappedBy = "pago")
+    @OneToMany
+    @JoinColumn(name = "id_pago", nullable = false)
     private List<Pago> pagos;
 
     public Empleado() {
