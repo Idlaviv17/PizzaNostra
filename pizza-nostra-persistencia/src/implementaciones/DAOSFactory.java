@@ -7,7 +7,7 @@ public class DAOSFactory {
     
     private static final IConexionBD conexionBD = new ConexionBD();
     
-    public static IPagoDAO crearJugadoresDAO() {
+    public static IPagoDAO crearPagosDAO() {
         return new PagoDAO(conexionBD);
     }
 }

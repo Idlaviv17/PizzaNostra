@@ -26,3 +26,6 @@ replay_pid*
 /pizza-nostra-dominio/build/
 /pizza-nostra-dominio/dist/
 /pizza-nostra-persistencia/nbproject/private/
+/pizza-nostra-negocios/nbproject/private/
+/pizza-nostra-negocios/build/
+/pizza-nostra-persistencia/build/

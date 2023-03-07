@@ -9,7 +9,7 @@ public class ConexionBD implements IConexionBD {
 
     @Override
     public EntityManager crearConexion() throws IllegalStateException {
-        EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("pizza_nostra");
+        EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("pizza-nostra-dominioPU");
         EntityManager em = emFactory.createEntityManager();
         return em;
     }

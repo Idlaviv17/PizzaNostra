@@ -10,12 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author jjavi
  */
 @Entity
+@Table(name = "salario")
 public class Salario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +37,11 @@ public class Salario implements Serializable {
 
     public Salario(Long id) {
         this.id = id;
+    }
+
+    public Salario(String rol, Float costePorHora) {
+        this.rol = rol;
+        this.costePorHora = costePorHora;
     }
 
     public Salario(Long id, String rol, Float costePorHora) {

@@ -13,13 +13,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author jjavi
  */
 @Entity
-public class Empleado extends Persona {
+@Table(name = "empleado")
+public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,10 +29,10 @@ public class Empleado extends Persona {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
+    @OneToMany(mappedBy = "horario")
     private List<Horario> horarios;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pago")
+    @OneToMany(mappedBy = "pago")
     private List<Pago> pagos;
 
     public Empleado() {

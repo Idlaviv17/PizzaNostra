@@ -24,68 +24,68 @@ public class PagoDAO implements IPagoDAO {
             em.getTransaction().commit();
             return true;
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudo agregar el producto");
+            System.err.println("No se pudo agregar el pago");
             ex.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public boolean actualizar(Producto producto) {
+    public boolean actualizar(Pago pago) {
         try {
             EntityManager em = this.conexionBD.crearConexion();
             em.getTransaction().begin();
-            em.merge(producto);
+            em.merge(pago);
             em.getTransaction().commit();
             return true;
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudo actualizar el producto");
+            System.err.println("No se pudo actualizar el pago");
             ex.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public boolean eliminar(Producto producto) {
+    public boolean eliminar(Pago pago) {
         try {
             EntityManager em = this.conexionBD.crearConexion();
             em.getTransaction().begin();
-            if (!em.contains(producto)) {
-                producto = em.merge(producto);
+            if (!em.contains(pago)) {
+                pago = em.merge(pago);
             }
-            em.remove(producto);
+            em.remove(pago);
             em.getTransaction().commit();
             return true;
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudo eliminar el producto");
+            System.err.println("No se pudo eliminar el pago");
             ex.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public Producto consultar(Long idProducto) {
+    public Pago consultar(Long idPago) {
         try {
             EntityManager em = this.conexionBD.crearConexion();
-            return em.find(Producto.class, idProducto);
+            return em.find(Pago.class, idPago);
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudo consultar el producto " + idProducto);
+            System.err.println("No se pudo consultar el pago " + idPago);
             ex.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public List<Producto> consultarTodos() {
+    public List<Pago> consultarTodos() {
         try {
             EntityManager em = this.conexionBD.crearConexion();
 
-            String jpqlQuery = "SELECT j FROM Producto j";
-            TypedQuery<Producto> query = em.createQuery(jpqlQuery, Producto.class);
+            String jpqlQuery = "SELECT j FROM Pago j";
+            TypedQuery<Pago> query = em.createQuery(jpqlQuery, Pago.class);
 
             return query.getResultList();
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudieron consultar los productos");
+            System.err.println("No se pudieron consultar los pagos");
             ex.printStackTrace();
             return null;
         }
