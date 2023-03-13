@@ -27,6 +27,10 @@ public class Pago implements Serializable {
     @JoinColumn(name="id_empleado")
     private Empleado empleado;
     
+    @ManyToOne
+    @JoinColumn(name="id_salario")
+    private Salario salario;
+    
     @Column(name = "inicio_periodo", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar inicioPeriodo;
@@ -55,8 +59,9 @@ public class Pago implements Serializable {
         this.id = id;
     }
 
-    public Pago(Empleado empleado, Calendar inicioPeriodo, Calendar finPeriodo, Calendar fecha, String estado, String comentario, Integer horasTrabajadas) {
+    public Pago(Empleado empleado, Salario salario, Calendar inicioPeriodo, Calendar finPeriodo, Calendar fecha, String estado, String comentario, Integer horasTrabajadas) {
         this.empleado = empleado;
+        this.salario = salario;
         this.inicioPeriodo = inicioPeriodo;
         this.finPeriodo = finPeriodo;
         this.fecha = fecha;
@@ -65,9 +70,10 @@ public class Pago implements Serializable {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Pago(Long id, Empleado empleado, Calendar inicioPeriodo, Calendar finPeriodo, Calendar fecha, String estado, String comentario, Integer horasTrabajadas) {
+    public Pago(Long id, Empleado empleado, Salario salario, Calendar inicioPeriodo, Calendar finPeriodo, Calendar fecha, String estado, String comentario, Integer horasTrabajadas) {
         this.id = id;
         this.empleado = empleado;
+        this.salario = salario;
         this.inicioPeriodo = inicioPeriodo;
         this.finPeriodo = finPeriodo;
         this.fecha = fecha;
@@ -90,6 +96,14 @@ public class Pago implements Serializable {
 
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
+    }
+
+    public Salario getSalario() {
+        return salario;
+    }
+
+    public void setSalario(Salario salario) {
+        this.salario = salario;
     }
 
     public Calendar getInicioPeriodo() {
