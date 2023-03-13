@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,25 +10,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author jjavi
- */
 @Entity
 @Table(name = "administrador")
-public class Administrador implements Serializable {
+public class Administrador extends Usuario {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id_administrador")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Administrador() {
     }
-
+    
     public Administrador(Long id) {
         this.id = id;
+    }
+
+    public Administrador(String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Calendar fechaNacimiento) {
+        super(nombre, apellidos, correo, domicilio, rfc, estado, telefono, fechaNacimiento);
+    }
+
+    public Administrador(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, Calendar fechaNacimiento) {
+        super(id, nombre, apellidos, correo, domicilio, rfc, telefono, fechaNacimiento);
     }
 
     public Long getId() {
@@ -43,27 +45,29 @@ public class Administrador implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Administrador)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Administrador other = (Administrador) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Administrador other = (Administrador) obj;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "entidades.Administrador[ id=" + id + " ]";
+        return "Administrador{" + "id=" + id + '}';
     }
     
 }

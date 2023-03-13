@@ -8,57 +8,51 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "horario")
-public class Horario implements Serializable {
+@Table(name = "periodo_vacacional")
+public class PeriodoVacacional implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id_horario")
+    @Column(name = "id_periodo_vacacional")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="id_empleado")
     private Empleado empleado;
     
-    @Column(name = "hora_inicio", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Calendar horaInicio;
-    
-    @Column(name = "hora_fin", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Calendar horaFin;
-    
-    @Column(name = "dia", nullable = false)
+    @Column(name = "fecha_inicio", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar dia;
+    private Calendar fechaInicio;
 
-    public Horario() {
+    @Column(name = "fecha_final", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Calendar fechaFinal;
+
+    public PeriodoVacacional() {
     }
 
-    public Horario(Long id) {
+    public PeriodoVacacional(Long id) {
         this.id = id;
     }
 
-    public Horario(Empleado empleado, Calendar horaInicio, Calendar horaFin, Calendar dia) {
+    public PeriodoVacacional(Empleado empleado, Calendar fechaInicio, Calendar fechaFinal) {
         this.empleado = empleado;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.dia = dia;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
     }
 
-    public Horario(Long id, Empleado empleado, Calendar horaInicio, Calendar horaFin, Calendar dia) {
+    public PeriodoVacacional(Long id, Empleado empleado, Calendar fechaInicio, Calendar fechaFinal) {
         this.id = id;
         this.empleado = empleado;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.dia = dia;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
     }
 
     public Long getId() {
@@ -77,30 +71,22 @@ public class Horario implements Serializable {
         this.empleado = empleado;
     }
 
-    public Calendar getHoraInicio() {
-        return horaInicio;
+    public Calendar getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setHoraInicio(Calendar horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setFechaInicio(Calendar fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public Calendar getHoraFin() {
-        return horaFin;
+    public Calendar getFechaFinal() {
+        return fechaFinal;
     }
 
-    public void setHoraFin(Calendar horaFin) {
-        this.horaFin = horaFin;
+    public void setFechaFinal(Calendar fechaFinal) {
+        this.fechaFinal = fechaFinal;
     }
-
-    public Calendar getDia() {
-        return dia;
-    }
-
-    public void setDia(Calendar dia) {
-        this.dia = dia;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,10 +97,10 @@ public class Horario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Horario)) {
+        if (!(object instanceof PeriodoVacacional)) {
             return false;
         }
-        Horario other = (Horario) object;
+        PeriodoVacacional other = (PeriodoVacacional) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +109,7 @@ public class Horario implements Serializable {
 
     @Override
     public String toString() {
-        return "Horario{" + "id=" + id + ", empleado=" + empleado + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", dia=" + dia + '}';
+        return "PeriodoVacacional{" + "id=" + id + ", empleado=" + empleado + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + '}';
     }
     
 }

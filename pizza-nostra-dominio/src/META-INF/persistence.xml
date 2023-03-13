@@ -5,10 +5,11 @@
     <class>entidades.Pago</class>
     <class>entidades.Salario</class>
     <class>entidades.Empleado</class>
-    <class>entidades.Persona</class>
     <class>entidades.Administrador</class>
     <class>entidades.Horario</class>
-    <class>entidades.HorasTrabajadas</class>
+    <class>entidades.Usuario</class>
+    <class>entidades.DiaTrabajado</class>
+    <class>entidades.PeriodoVacacional</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/pizza_nostra?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

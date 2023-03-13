@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,30 +12,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/**
- *
- * @author jjavi
- */
 @Entity
 @Table(name = "empleado")
-public class Empleado implements Serializable {
+public class Empleado extends Usuario {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id_empleado")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    //@OneToMany(mappedBy = "horario", cascade = CascadeType.PERSIST) 
-    //@OneToMany
-    @JoinColumn(name = "id_horario", nullable = false)
-    private List<Horario> horarios;
-    
-    @OneToMany
-    @JoinColumn(name = "id_pago", nullable = false)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pago> pagos;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Horario> horario;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaTrabajado> diasTrabajados;
+    
+    @OneToOne
+    @JoinColumn(name="id_periodo_vacacional", nullable = true)
+    private PeriodoVacacional vacacion;
 
     public Empleado() {
     }
@@ -45,12 +44,23 @@ public class Empleado implements Serializable {
     public Empleado(Long id) {
         this.id = id;
     }
-    
-    public Empleado(Long id, List<Horario> horarios, List<Pago> pagos) {
+
+    public Empleado(Long id, List<Pago> pagos, List<Horario> horario, List<DiaTrabajado> diasTrabajados, PeriodoVacacional vacacion) {
         this.id = id;
-        this.horarios = horarios;
         this.pagos = pagos;
-    }    
+        this.horario = horario;
+        this.diasTrabajados = diasTrabajados;
+        this.vacacion = vacacion;
+    }
+
+    public Empleado(Long id, List<Pago> pagos, List<Horario> horario, List<DiaTrabajado> diasTrabajados, PeriodoVacacional vacacion, String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Calendar fechaNacimiento) {
+        super(nombre, apellidos, correo, domicilio, rfc, estado, telefono, fechaNacimiento);
+        this.id = id;
+        this.pagos = pagos;
+        this.horario = horario;
+        this.diasTrabajados = diasTrabajados;
+        this.vacacion = vacacion;
+    }
 
     public Long getId() {
         return id;
@@ -58,14 +68,6 @@ public class Empleado implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
     }
 
     public List<Pago> getPagos() {
@@ -76,29 +78,55 @@ public class Empleado implements Serializable {
         this.pagos = pagos;
     }
 
+    public List<Horario> getHorario() {
+        return horario;
+    }
+
+    public void setHorario(List<Horario> horario) {
+        this.horario = horario;
+    }
+
+    public List<DiaTrabajado> getDiasTrabajados() {
+        return diasTrabajados;
+    }
+
+    public void setDiasTrabajados(List<DiaTrabajado> diasTrabajados) {
+        this.diasTrabajados = diasTrabajados;
+    }
+
+    public PeriodoVacacional getVacacion() {
+        return vacacion;
+    }
+
+    public void setVacacion(PeriodoVacacional vacacion) {
+        this.vacacion = vacacion;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Empleado)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Empleado other = (Empleado) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Empleado other = (Empleado) obj;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "entidades.Empleado[ id=" + id + " ]";
+        return "Empleado{" + "id=" + id + ", pagos=" + pagos + ", horario=" + horario + ", diasTrabajados=" + diasTrabajados + ", vacacion=" + vacacion + '}';
     }
-    
+
 }

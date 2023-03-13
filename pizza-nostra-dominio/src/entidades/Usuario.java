@@ -1,32 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author jjavi
- */
-@Entity
-@Table(name = "persona")
-public class Persona implements Serializable {
+@MappedSuperclass
+@Table(name = "usuario")
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id_persona")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_usuario")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(name = "nombre", nullable = false, length = 200, unique = false)
@@ -44,21 +36,35 @@ public class Persona implements Serializable {
     @Column(name = "rfc", nullable = false, length = 13, unique = true)
     private String rfc;
     
+    @Column(name = "estado", nullable = false)
+    private Boolean estado;
+    
     @Column(name = "telefono", nullable = false, length = 10, unique = true)
     private String telefono;
     
     @Column(name = "fecha_nacimiento", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento;
 
-    public Persona() {
+    public Usuario() {
     }
 
-    public Persona(Long id) {
+    public Usuario(Long id) {
         this.id = id;
     }
 
-    public Persona(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, Calendar fechaNacimiento) {
+    public Usuario(String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Calendar fechaNacimiento) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.domicilio = domicilio;
+        this.rfc = rfc;
+        this.estado = estado;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Usuario(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, Calendar fechaNacimiento) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -117,6 +123,14 @@ public class Persona implements Serializable {
         this.rfc = rfc;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -143,10 +157,10 @@ public class Persona implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Persona)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        Persona other = (Persona) object;
+        Usuario other = (Usuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -155,7 +169,7 @@ public class Persona implements Serializable {
 
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", correo=" + correo + ", domicilio=" + domicilio + ", rfc=" + rfc + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", correo=" + correo + ", domicilio=" + domicilio + ", rfc=" + rfc + ", estado=" + estado + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + '}';
     }
     
 }

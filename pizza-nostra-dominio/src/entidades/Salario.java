@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
 import java.io.Serializable;
@@ -12,10 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author jjavi
- */
 @Entity
 @Table(name = "salario")
 public class Salario implements Serializable {
@@ -23,7 +15,7 @@ public class Salario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id_salario")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(name = "rol", nullable = false, length = 100, unique = true)
