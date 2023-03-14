@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,15 +29,15 @@ public class DiaTrabajado implements Serializable {
     
     @Column(name = "hora_entrada", nullable = false)
     @Temporal(TemporalType.TIME)
-    private Calendar horaEntrada;
+    private Date horaEntrada;
     
     @Column(name = "hora_salida", nullable = false)
     @Temporal(TemporalType.TIME)
-    private Calendar horaSalida;
+    private Date horaSalida;
     
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar fecha;
+    private Date fecha;
 
     public DiaTrabajado() {
     }
@@ -46,18 +46,58 @@ public class DiaTrabajado implements Serializable {
         this.id = id;
     }
 
-    public DiaTrabajado(Empleado empleado, Calendar horaEntrada, Calendar horaSalida, Calendar fecha) {
+    public DiaTrabajado(Empleado empleado, Date horaEntrada, Date horaSalida, Date fecha) {
         this.empleado = empleado;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
         this.fecha = fecha;
     }
 
-    public DiaTrabajado(Long id, Empleado empleado, Calendar horaEntrada, Calendar horaSalida, Calendar fecha) {
+    public DiaTrabajado(Long id, Empleado empleado, Date horaEntrada, Date horaSalida, Date fecha) {
         this.id = id;
         this.empleado = empleado;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
+        this.fecha = fecha;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public Date getHoraEntrada() {
+        return horaEntrada;
+    }
+
+    public void setHoraEntrada(Date horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public Date getHoraSalida() {
+        return horaSalida;
+    }
+
+    public void setHoraSalida(Date horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

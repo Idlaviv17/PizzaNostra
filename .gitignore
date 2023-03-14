@@ -30,3 +30,6 @@ replay_pid*
 /pizza-nostra-persistencia/build/
 /pizza-nostra-presentacion/nbproject/private/
 /pizza-nostra-presentacion/build/
+/pizza-nostra-persistencia/dist/
+/pizza-nostra-negocios/dist/
+/pizza-nostra-presentacion/dist/

@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,15 +29,15 @@ public class Horario implements Serializable {
     
     @Column(name = "hora_inicio", nullable = false)
     @Temporal(TemporalType.TIME)
-    private Calendar horaInicio;
+    private Date horaInicio;
     
     @Column(name = "hora_fin", nullable = false)
     @Temporal(TemporalType.TIME)
-    private Calendar horaFin;
+    private Date horaFin;
     
     @Column(name = "dia", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar dia;
+    private Date dia;
 
     public Horario() {
     }
@@ -46,14 +46,14 @@ public class Horario implements Serializable {
         this.id = id;
     }
 
-    public Horario(Empleado empleado, Calendar horaInicio, Calendar horaFin, Calendar dia) {
+    public Horario(Empleado empleado, Date horaInicio, Date horaFin, Date dia) {
         this.empleado = empleado;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.dia = dia;
     }
 
-    public Horario(Long id, Empleado empleado, Calendar horaInicio, Calendar horaFin, Calendar dia) {
+    public Horario(Long id, Empleado empleado, Date horaInicio, Date horaFin, Date dia) {
         this.id = id;
         this.empleado = empleado;
         this.horaInicio = horaInicio;
@@ -77,27 +77,27 @@ public class Horario implements Serializable {
         this.empleado = empleado;
     }
 
-    public Calendar getHoraInicio() {
+    public Date getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Calendar horaInicio) {
+    public void setHoraInicio(Date horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Calendar getHoraFin() {
+    public Date getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Calendar horaFin) {
+    public void setHoraFin(Date horaFin) {
         this.horaFin = horaFin;
     }
 
-    public Calendar getDia() {
+    public Date getDia() {
         return dia;
     }
 
-    public void setDia(Calendar dia) {
+    public void setDia(Date dia) {
         this.dia = dia;
     }
 

@@ -6,13 +6,13 @@ import interfaces.IPagoDAO;
 import java.util.List;
 
 public class Control implements IControl {
-    
+
     private IPagoDAO pagos;
 
     public Control() {
         this.pagos = DAOSFactory.crearPagosDAO();
     }
-    
+
     @Override
     public boolean agregarPago(Pago pago) {
         return pagos.agregar(pago);
@@ -37,5 +37,5 @@ public class Control implements IControl {
     public List<Pago> consultarPagos() {
         return pagos.consultarTodos();
     }
-    
+
 }

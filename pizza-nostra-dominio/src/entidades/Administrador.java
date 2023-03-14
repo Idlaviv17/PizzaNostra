@@ -1,7 +1,6 @@
 package entidades;
 
-import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,11 +26,11 @@ public class Administrador extends Usuario {
         this.id = id;
     }
 
-    public Administrador(String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Calendar fechaNacimiento) {
+    public Administrador(String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Date fechaNacimiento) {
         super(nombre, apellidos, correo, domicilio, rfc, estado, telefono, fechaNacimiento);
     }
 
-    public Administrador(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, Calendar fechaNacimiento) {
+    public Administrador(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, Date fechaNacimiento) {
         super(id, nombre, apellidos, correo, domicilio, rfc, telefono, fechaNacimiento);
     }
 

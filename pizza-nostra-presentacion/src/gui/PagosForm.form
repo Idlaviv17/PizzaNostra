@@ -31,13 +31,13 @@
                   <Group type="102" attributes="0">
                       <Component id="btnAgregar" min="-2" pref="83" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnEliminar" min="-2" pref="83" max="-2" attributes="0"/>
+                      <Component id="btnCancelar" min="-2" pref="83" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEditar" min="-2" pref="83" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnConsultar" min="-2" pref="83" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnCancelar" min="-2" pref="83" max="-2" attributes="0"/>
+                      <Component id="btnLimpiar" min="-2" pref="83" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -63,9 +63,9 @@
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="btnEditar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="btnConsultar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="btnCancelar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="btnLimpiar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnEliminar" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="btnCancelar" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnAgregar" min="-2" pref="35" max="-2" attributes="0"/>
@@ -86,13 +86,13 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnCancelar">
+    <Component class="javax.swing.JButton" name="btnLimpiar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="text" type="java.lang.String" value="Limpiar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimpiarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregar">
@@ -136,13 +136,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnEliminar">
+    <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar"/>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSalario">
@@ -355,10 +355,10 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+                <StringItem index="0" value="-- Seleccionar --"/>
+                <StringItem index="1" value="Empleado1"/>
+                <StringItem index="2" value="Empleado2"/>
+                <StringItem index="3" value="Empleado3"/>
               </StringArray>
             </Property>
           </Properties>
@@ -370,10 +370,10 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+                <StringItem index="0" value="-- Seleccionar --"/>
+                <StringItem index="1" value="Salario1"/>
+                <StringItem index="2" value="Salario2"/>
+                <StringItem index="3" value="Salario3"/>
               </StringArray>
             </Property>
           </Properties>
@@ -385,10 +385,10 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+                <StringItem index="0" value="-- Seleccionar --"/>
+                <StringItem index="1" value="PAGADO "/>
+                <StringItem index="2" value="CANCELADO"/>
+                <StringItem index="3" value="PENDIENTE"/>
               </StringArray>
             </Property>
           </Properties>

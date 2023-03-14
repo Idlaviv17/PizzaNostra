@@ -1,7 +1,6 @@
 package entidades;
 
-import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -53,7 +52,7 @@ public class Empleado extends Usuario {
         this.vacacion = vacacion;
     }
 
-    public Empleado(Long id, List<Pago> pagos, List<Horario> horario, List<DiaTrabajado> diasTrabajados, PeriodoVacacional vacacion, String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Calendar fechaNacimiento) {
+    public Empleado(Long id, List<Pago> pagos, List<Horario> horario, List<DiaTrabajado> diasTrabajados, PeriodoVacacional vacacion, String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Date fechaNacimiento) {
         super(nombre, apellidos, correo, domicilio, rfc, estado, telefono, fechaNacimiento);
         this.id = id;
         this.pagos = pagos;

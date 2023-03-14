@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,15 +33,15 @@ public class Pago implements Serializable {
     
     @Column(name = "inicio_periodo", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar inicioPeriodo;
+    private Date inicioPeriodo;
     
     @Column(name = "fin_periodo", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar finPeriodo;
+    private Date finPeriodo;
     
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar fecha;
+    private Date fecha;
     
     @Column(name = "estado", nullable = false, length = 10, unique = false)
     private String estado;
@@ -59,7 +59,7 @@ public class Pago implements Serializable {
         this.id = id;
     }
 
-    public Pago(Empleado empleado, Salario salario, Calendar inicioPeriodo, Calendar finPeriodo, Calendar fecha, String estado, String comentario, Integer horasTrabajadas) {
+    public Pago(Empleado empleado, Salario salario, Date inicioPeriodo, Date finPeriodo, Date fecha, String estado, String comentario, Integer horasTrabajadas) {
         this.empleado = empleado;
         this.salario = salario;
         this.inicioPeriodo = inicioPeriodo;
@@ -70,7 +70,7 @@ public class Pago implements Serializable {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Pago(Long id, Empleado empleado, Salario salario, Calendar inicioPeriodo, Calendar finPeriodo, Calendar fecha, String estado, String comentario, Integer horasTrabajadas) {
+    public Pago(Long id, Empleado empleado, Salario salario, Date inicioPeriodo, Date finPeriodo, Date fecha, String estado, String comentario, Integer horasTrabajadas) {
         this.id = id;
         this.empleado = empleado;
         this.salario = salario;
@@ -106,27 +106,27 @@ public class Pago implements Serializable {
         this.salario = salario;
     }
 
-    public Calendar getInicioPeriodo() {
+    public Date getInicioPeriodo() {
         return inicioPeriodo;
     }
 
-    public void setInicioPeriodo(Calendar inicioPeriodo) {
+    public void setInicioPeriodo(Date inicioPeriodo) {
         this.inicioPeriodo = inicioPeriodo;
     }
 
-    public Calendar getFinPeriodo() {
+    public Date getFinPeriodo() {
         return finPeriodo;
     }
 
-    public void setFinPeriodo(Calendar finPeriodo) {
+    public void setFinPeriodo(Date finPeriodo) {
         this.finPeriodo = finPeriodo;
     }
 
-    public Calendar getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Calendar fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
