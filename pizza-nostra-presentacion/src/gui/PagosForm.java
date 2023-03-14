@@ -1,107 +1,41 @@
 package gui;
 
-import control.Control;
 import control.IControl;
+import entidades.Empleado;
 import entidades.Pago;
+import entidades.Salario;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PagosForm extends javax.swing.JFrame {
-    
+
     private final IControl control;
-    
+
     public PagosForm(IControl control) {
         initComponents();
-        this.setExtendedState(this.MAXIMIZED_BOTH); 
+        this.setExtendedState(this.MAXIMIZED_BOTH);
         this.control = control;
         this.llenarTabla();
+        this.llenarEmpleados();
+        this.llenarSalarios();
     }
-    
-//    private void guardar() {
-//        if (this.txtID.getText().isEmpty()) {
-//            this.agregar();
-//        } else {
-//            this.actualizar();
-//        }
-//    }
-//    
-//    private void agregar() {
-//        String nombre = this.txtEmpleado.getText();
-//        String curp = this.txtInicioPeriodo.getText();
-//        //TODO: Agregar validaciones
-//        boolean seAgregoSocio = this.sociosDAO.agregar(new Socio(nombre, curp));
-//        if (seAgregoSocio) {
-//            JOptionPane.showMessageDialog(this, "Se agregó el nuevo socio", "Información", JOptionPane.INFORMATION_MESSAGE);
-//            this.limpiarFormulario();
-//            this.llenarTabla();
-//        } else {
-//            JOptionPane.showMessageDialog(this, "No fue posible agregar el socio", "Información", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-//    
-//    private void actualizar() {
-//        Long idSocio = Long.parseLong(this.txtID.getText());
-//        String nombre = this.txtEmpleado.getText();
-//        String curp = this.txtInicioPeriodo.getText();
-//        boolean seActualizoSocio = this.sociosDAO.actualizar(new Socio(idSocio, nombre, curp));
-//        if (seActualizoSocio) {
-//            JOptionPane.showMessageDialog(this, "Se actualizó el socio", "Información", JOptionPane.INFORMATION_MESSAGE);
-//            this.limpiarFormulario();
-//            this.llenarTabla();
-//        } else {
-//            JOptionPane.showMessageDialog(this, "No fue posible actualizar el socio", "Información", JOptionPane.ERROR_MESSAGE);
-//        }
-//        
-//    }
-//    
-//    private void editar() {
-//        Long idSocioSeleccionado = this.getIdSocioSeleccionado();
-//        if (idSocioSeleccionado == null) {   
-//            JOptionPane.showMessageDialog(this, "Debes seleccionar un socio", "Información", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//        Socio socio = this.sociosDAO.consultar(idSocioSeleccionado);
-//        if (socio != null) {
-//            this.llenarFormulario(socio);
-//        }
-//    }
-//    
-//    private void eliminar() {
-//        Long idSocioSeleccionado = this.getIdSocioSeleccionado();
-//        if (idSocioSeleccionado == null) {   
-//            JOptionPane.showMessageDialog(this, "Debes seleccionar un socio", "Información", JOptionPane.WARNING_MESSAGE);
-//        } else {
-//            int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar al socio?", "Confirmación", JOptionPane.YES_NO_OPTION);
-//            
-//            if (opcionSeleccionada == JOptionPane.NO_OPTION) {
-//                return;
-//            }
-//            
-//            boolean seEliminoSocio = this.sociosDAO.eliminar(idSocioSeleccionado);
-//            if (seEliminoSocio) {
-//                JOptionPane.showMessageDialog(this, "Se eliminó el socio correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-//                this.llenarTabla();
-//            } else {
-//                JOptionPane.showMessageDialog(this, "No se pudo eliminar el socio", "Información", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
-//    }
-//    
-//    private Long getIdSocioSeleccionado() {
-//        int indiceFilaSeleccionada = this.tblSocios.getSelectedRow();
-//        if (indiceFilaSeleccionada != -1) {
-//            DefaultTableModel modelo = (DefaultTableModel) this.tblSocios.getModel();
-//            int indiceColumnaId = 0;
-//            Long idSocioSeleccionado = (Long) modelo.getValueAt(indiceFilaSeleccionada, indiceColumnaId);
-//            return idSocioSeleccionado;
-//        } else {
-//            return null;
-//        }
-//    }
-//    
+
+    private void llenarEmpleados() {
+        List<Empleado> listaEmpleados = this.control.consultarEmpleados();
+        listaEmpleados.forEach(empleado -> {
+            this.cbxEmpleado.addItem(empleado.getNombre() + " " + empleado.getApellidos());
+        });
+    }
+
+    private void llenarSalarios() {
+        List<Salario> listaSalarios = this.control.consultarSalarios();
+        listaSalarios.forEach(salario -> {
+            this.cbxSalario.addItem(salario.getRol() + " / $" + salario.getCostePorHora());
+        });
+    }
+
     private void llenarTabla() {
-        List<Pago> listaPagos = this.control.consultarPagos(); 
+        List<Pago> listaPagos = this.control.consultarPagos();
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPagos.getModel();
         modeloTabla.setRowCount(0);
         listaPagos.forEach(pago -> {
@@ -117,20 +51,19 @@ public class PagosForm extends javax.swing.JFrame {
             fila[8] = pago.getComentario();
             modeloTabla.addRow(fila);
         });
-        
     }
-//    
-//    private void llenarFormulario(Socio socio) {
-//        this.txtID.setText(socio.getIdSocio().toString());
-//        this.txtEmpleado.setText(socio.getNombre());
-//        this.txtInicioPeriodo.setText(socio.getCurp());
-//    }
-//    
-//    private void limpiarFormulario() {
-//        this.txtID.setText("");
-//        this.txtEmpleado.setText("");
-//        this.txtInicioPeriodo.setText("");
-//    }
+
+    private void limpiarFormulario() {
+        this.txtID.setText("");
+        this.cbxEmpleado.setSelectedIndex(0);
+        this.cbxSalario.setSelectedIndex(0);
+        this.dpInicioPeriodo.setText("");
+        this.dpFinPeriodo.setText("");
+        this.dpFecha.setText("");
+        this.cbxEstado.setSelectedIndex(0);
+        this.txtHorasTrabajadas.setText("");
+        this.txtComentario.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -261,9 +194,9 @@ public class PagosForm extends javax.swing.JFrame {
         txtComentario.setRows(5);
         jScrollPane2.setViewportView(txtComentario);
 
-        cbxEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --", "Empleado1", "Empleado2", "Empleado3" }));
+        cbxEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --" }));
 
-        cbxSalario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --", "Salario1", "Salario2", "Salario3" }));
+        cbxSalario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --" }));
 
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --", "PAGADO ", "CANCELADO", "PENDIENTE" }));
 
@@ -405,19 +338,19 @@ public class PagosForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        //this.limpiarFormulario();
+        this.limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        //this.guardar();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        //this.editar();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //this.eliminar();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed

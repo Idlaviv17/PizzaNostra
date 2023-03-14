@@ -354,11 +354,8 @@
         <Component class="javax.swing.JComboBox" name="cbxEmpleado">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="1">
                 <StringItem index="0" value="-- Seleccionar --"/>
-                <StringItem index="1" value="Empleado1"/>
-                <StringItem index="2" value="Empleado2"/>
-                <StringItem index="3" value="Empleado3"/>
               </StringArray>
             </Property>
           </Properties>
@@ -369,11 +366,8 @@
         <Component class="javax.swing.JComboBox" name="cbxSalario">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="1">
                 <StringItem index="0" value="-- Seleccionar --"/>
-                <StringItem index="1" value="Salario1"/>
-                <StringItem index="2" value="Salario2"/>
-                <StringItem index="3" value="Salario3"/>
               </StringArray>
             </Property>
           </Properties>
