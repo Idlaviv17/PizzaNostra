@@ -1,5 +1,6 @@
 package control;
 
+import entidades.DiaTrabajado;
 import entidades.Empleado;
 import entidades.Pago;
 import entidades.Salario;
@@ -36,4 +37,5 @@ public interface IControl {
     public Salario consultarSalario(Long idSalario);
 
     public List<Salario> consultarSalarios();
+   
 }

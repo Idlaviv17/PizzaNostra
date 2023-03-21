@@ -396,6 +396,9 @@
         <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpFinPeriodo">
         </Component>
         <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpFecha">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
