@@ -2,6 +2,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,10 +29,10 @@ public class DiaTrabajado implements Serializable {
     private Empleado empleado;
     
     @Column(name = "hora_entrada", nullable = false)
-    private LocalDate horaEntrada;
+    private LocalTime horaEntrada;
     
     @Column(name = "hora_salida", nullable = false)
-    private LocalDate horaSalida;
+    private LocalTime horaSalida;
     
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
@@ -43,14 +44,14 @@ public class DiaTrabajado implements Serializable {
         this.id = id;
     }
 
-    public DiaTrabajado(Empleado empleado, LocalDate horaEntrada, LocalDate horaSalida, LocalDate fecha) {
+    public DiaTrabajado(Empleado empleado, LocalTime horaEntrada, LocalTime horaSalida, LocalDate fecha) {
         this.empleado = empleado;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
         this.fecha = fecha;
     }
 
-    public DiaTrabajado(Long id, Empleado empleado, LocalDate horaEntrada, LocalDate horaSalida, LocalDate fecha) {
+    public DiaTrabajado(Long id, Empleado empleado, LocalTime horaEntrada, LocalTime horaSalida, LocalDate fecha) {
         this.id = id;
         this.empleado = empleado;
         this.horaEntrada = horaEntrada;
@@ -74,19 +75,19 @@ public class DiaTrabajado implements Serializable {
         this.empleado = empleado;
     }
 
-    public LocalDate getHoraEntrada() {
+    public LocalTime getHoraEntrada() {
         return horaEntrada;
     }
 
-    public void setHoraEntrada(LocalDate horaEntrada) {
+    public void setHoraEntrada(LocalTime horaEntrada) {
         this.horaEntrada = horaEntrada;
     }
 
-    public LocalDate getHoraSalida() {
+    public LocalTime getHoraSalida() {
         return horaSalida;
     }
 
-    public void setHoraSalida(LocalDate horaSalida) {
+    public void setHoraSalida(LocalTime horaSalida) {
         this.horaSalida = horaSalida;
     }
 

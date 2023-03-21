@@ -1,9 +1,11 @@
 package control;
 
+import entidades.DiaTrabajado;
 import entidades.Empleado;
 import entidades.Pago;
 import entidades.Salario;
 import implementaciones.DAOSFactory;
+import interfaces.IDiaTrabajadoDAO;
 import interfaces.IEmpleadoDAO;
 import interfaces.IPagoDAO;
 import interfaces.ISalarioDAO;
@@ -14,11 +16,13 @@ public class Control implements IControl {
     private IPagoDAO pagos;
     private IEmpleadoDAO empleados;
     private ISalarioDAO salarios;
+    private IDiaTrabajadoDAO diasTrabajados;
 
     public Control() {
         this.pagos = DAOSFactory.crearPagosDAO();
         this.empleados = DAOSFactory.crearEmpleadosDAO();
         this.salarios = DAOSFactory.crearSalariosDAO();
+        this.diasTrabajados = DAOSFactory.crearDiasTrabajadosDAO();
     }
 
     @Override
@@ -94,6 +98,11 @@ public class Control implements IControl {
     @Override
     public List<Salario> consultarSalarios() {
         return salarios.consultarTodos();
+    }
+    
+    @Override
+    public List<DiaTrabajado> consultarDiasTrabajadosPorEmpleado(Empleado empleado) {
+        return diasTrabajados.consultarPorEmpleado(empleado);
     }
     
 }

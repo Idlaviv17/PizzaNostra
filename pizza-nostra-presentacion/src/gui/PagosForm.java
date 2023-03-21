@@ -1,10 +1,16 @@
 package gui;
 
+import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
+import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 import control.IControl;
+import entidades.DiaTrabajado;
 import entidades.Empleado;
 import entidades.Pago;
 import entidades.Salario;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,13 +25,14 @@ public class PagosForm extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.control = control;
-        
+
         // Llenado de la tabla
         this.llenarTabla();
-        
+
         // Llenado de ComboBoxes
         this.llenarEmpleados();
         this.llenarSalarios();
+        this.activarListeners();
     }
 
     private void guardar() {
@@ -44,7 +51,7 @@ public class PagosForm extends javax.swing.JFrame {
         LocalDate fecha = this.dpFecha.getDate();
         String estado = (String) this.cbxEstado.getSelectedItem();
         String comentario = this.txtComentario.getText();
-        boolean seAgregoPago = this.control.agregarPago(new Pago(empleado , salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
+        boolean seAgregoPago = this.control.agregarPago(new Pago(empleado, salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
         if (seAgregoPago) {
             JOptionPane.showMessageDialog(this, "Se ha creado el pago", "Información", JOptionPane.INFORMATION_MESSAGE);
             this.limpiarFormulario();
@@ -63,7 +70,7 @@ public class PagosForm extends javax.swing.JFrame {
         LocalDate fecha = this.dpFecha.getDate();
         String estado = (String) this.cbxEstado.getSelectedItem();
         String comentario = this.txtComentario.getText();
-        boolean seActualizoPago = this.control.actualizarPago(new Pago(idPago, empleado , salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
+        boolean seActualizoPago = this.control.actualizarPago(new Pago(idPago, empleado, salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
         if (seActualizoPago) {
             JOptionPane.showMessageDialog(this, "Se actualizó el pago", "Información", JOptionPane.INFORMATION_MESSAGE);
             this.limpiarFormulario();
@@ -176,6 +183,48 @@ public class PagosForm extends javax.swing.JFrame {
         this.cbxEstado.setSelectedIndex(0);
         this.txtHorasTrabajadas.setText("");
         this.txtComentario.setText("");
+    }
+
+    private void activarListeners() {
+        // This method will be called whenever the date is changed
+        dpInicioPeriodo.addDateChangeListener((DateChangeEvent event) -> {
+                if (dpFinPeriodo.getDate() != null) {
+                    txtHorasTrabajadas.setText(String.valueOf(calcularHoras()));
+                }
+        });
+        dpFinPeriodo.addDateChangeListener((DateChangeEvent event) -> {
+
+                if (dpInicioPeriodo.getDate() != null) {
+                    txtHorasTrabajadas.setText(String.valueOf(calcularHoras()));
+                }
+        });
+    }
+
+    private int calcularHoras() {
+        Empleado empleado = (Empleado) cbxEmpleado.getSelectedItem();
+        List<DiaTrabajado> dias = control.consultarDiasTrabajadosPorEmpleado(empleado);
+
+        int horasTrabajadas = 0;
+
+        for (int i = 0; i < dias.size(); i++) {
+            DiaTrabajado dia = dias.get(i);
+            if (isInPeriod(dia.getFecha(), dpInicioPeriodo.getDate(), dpFinPeriodo.getDate())) {
+                horasTrabajadas += (dias.get(i).getHoraSalida().getHour() - dias.get(i).getHoraEntrada().getHour());
+            }
+        }
+        return horasTrabajadas;
+    }
+
+    private boolean isInPeriod(LocalDate fecha, LocalDate fechaInicio, LocalDate fechaFin) {
+        if (fecha.equals(fechaInicio) || fecha.equals(fechaFin)) {
+            return true;
+        }
+
+        if (fecha.isAfter(fechaInicio) && fecha.isBefore(fechaFin)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
