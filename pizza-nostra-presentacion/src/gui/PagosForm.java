@@ -1,6 +1,5 @@
 package gui;
 
-import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 import control.IControl;
 import entidades.DiaTrabajado;
@@ -8,9 +7,6 @@ import entidades.Empleado;
 import entidades.Pago;
 import entidades.Salario;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +20,7 @@ public class PagosForm extends javax.swing.JFrame {
 
     public PagosForm(IControl control) {
         initComponents();
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setExtendedState(PagosForm.MAXIMIZED_BOTH);
         this.control = control;
         this.fechaDeHoy = LocalDate.now();
 
@@ -49,8 +45,10 @@ public class PagosForm extends javax.swing.JFrame {
     }
 
     private void agregar() {
-        if(!this.validarCampos()) return;
-        
+        if (!this.validarCampos()) {
+            return;
+        }
+
         Empleado empleado = (Empleado) this.cbxEmpleado.getSelectedItem();
         Salario salario = (Salario) this.cbxSalario.getSelectedItem();
         LocalDate inicioPeriodo = this.dpInicioPeriodo.getDate();
@@ -58,8 +56,9 @@ public class PagosForm extends javax.swing.JFrame {
         LocalDate fecha = this.dpFecha.getDate();
         String estado = (String) this.cbxEstado.getSelectedItem();
         String comentario = this.txtComentario.getText();
+        Integer horasTrabajadas = Integer.valueOf(this.txtHorasTrabajadas.getText());
 
-        boolean seAgregoPago = this.control.agregarPago(new Pago(empleado, salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
+        boolean seAgregoPago = this.control.agregarPago(new Pago(empleado, salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, horasTrabajadas));
         if (seAgregoPago) {
             JOptionPane.showMessageDialog(this, "Se ha creado el pago", "Información", JOptionPane.INFORMATION_MESSAGE);
             this.limpiarFormulario();
@@ -70,9 +69,11 @@ public class PagosForm extends javax.swing.JFrame {
     }
 
     private void actualizar() {
-        if(!this.validarCampos()) return;
-        
-        Long idPago = Long.parseLong(this.txtID.getText());
+        if (!this.validarCampos()) {
+            return;
+        }
+
+        Long idPago = Long.valueOf(this.txtID.getText());
         Empleado empleado = (Empleado) this.cbxEmpleado.getSelectedItem();
         Salario salario = (Salario) this.cbxSalario.getSelectedItem();
         LocalDate inicioPeriodo = this.dpInicioPeriodo.getDate();
@@ -80,8 +81,9 @@ public class PagosForm extends javax.swing.JFrame {
         LocalDate fecha = this.dpFecha.getDate();
         String estado = (String) this.cbxEstado.getSelectedItem();
         String comentario = this.txtComentario.getText();
-        
-        boolean seActualizoPago = this.control.actualizarPago(new Pago(idPago, empleado, salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
+        Integer horasTrabajadas = Integer.valueOf(this.txtHorasTrabajadas.getText());
+
+        boolean seActualizoPago = this.control.actualizarPago(new Pago(idPago, empleado, salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, horasTrabajadas));
         if (seActualizoPago) {
             JOptionPane.showMessageDialog(this, "Se actualizó el pago", "Información", JOptionPane.INFORMATION_MESSAGE);
             this.limpiarFormulario();
@@ -188,15 +190,15 @@ public class PagosForm extends javax.swing.JFrame {
         this.txtID.setText("");
         this.cbxEmpleado.setSelectedIndex(0);
         this.cbxSalario.setSelectedIndex(0);
-        this.dpInicioPeriodo.setDate(this.fechaDeHoy);
-        this.dpFinPeriodo.setDate(this.fechaDeHoy);
+        this.dpInicioPeriodo.setText("");
+        this.dpFinPeriodo.setText("");
         this.dpFecha.setDate(this.fechaDeHoy);
         this.cbxEstado.setSelectedIndex(0);
         this.txtHorasTrabajadas.setText("");
         this.txtComentario.setText("");
     }
 
-    private boolean validarCampos() {   
+    private boolean validarCampos() {
         if (this.cbxEmpleado.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Se debe de seleccionar un empleado para poder realizar el pago", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -220,18 +222,23 @@ public class PagosForm extends javax.swing.JFrame {
             return false;
         }
         return true;
+    }
+
     private void activarListeners() {
         // This method will be called whenever the date is changed
         dpInicioPeriodo.addDateChangeListener((DateChangeEvent event) -> {
+            if (cbxEmpleado.getSelectedIndex() != 0) {
                 if (dpFinPeriodo.getDate() != null) {
                     txtHorasTrabajadas.setText(String.valueOf(calcularHoras()));
                 }
+            }
         });
         dpFinPeriodo.addDateChangeListener((DateChangeEvent event) -> {
-
+            if (cbxEmpleado.getSelectedIndex() != 0) {
                 if (dpInicioPeriodo.getDate() != null) {
                     txtHorasTrabajadas.setText(String.valueOf(calcularHoras()));
                 }
+            }
         });
     }
 
@@ -255,11 +262,7 @@ public class PagosForm extends javax.swing.JFrame {
             return true;
         }
 
-        if (fecha.isAfter(fechaInicio) && fecha.isBefore(fechaFin)) {
-            return true;
-        }
-
-        return false;
+        return fecha.isAfter(fechaInicio) && fecha.isBefore(fechaFin);
     }
 
     /**

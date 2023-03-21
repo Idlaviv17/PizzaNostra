@@ -7,7 +7,7 @@ import entidades.Salario;
 import java.util.List;
 
 public interface IControl {
-    
+
     public boolean agregarPago(Pago pago);
 
     public boolean actualizarPago(Pago pago);
@@ -17,7 +17,7 @@ public interface IControl {
     public Pago consultarPago(Long idPago);
 
     public List<Pago> consultarPagos();
-    
+
     public boolean agregarEmpleado(Empleado empleado);
 
     public boolean actualizarEmpleado(Empleado empleado);
@@ -27,7 +27,7 @@ public interface IControl {
     public Empleado consultarEmpleado(Long idEmpleado);
 
     public List<Empleado> consultarEmpleados();
-    
+
     public boolean agregarSalario(Salario salario);
 
     public boolean actualizarSalario(Salario salario);
@@ -37,6 +37,6 @@ public interface IControl {
     public Salario consultarSalario(Long idSalario);
 
     public List<Salario> consultarSalarios();
-    
+
     public List<DiaTrabajado> consultarDiasTrabajadosPorEmpleado(Empleado empleado);
 }
