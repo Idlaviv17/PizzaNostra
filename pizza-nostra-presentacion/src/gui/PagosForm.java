@@ -4,8 +4,12 @@ import control.IControl;
 import entidades.Empleado;
 import entidades.Pago;
 import entidades.Salario;
+import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import renderers.EmpleadoRenderer;
+import renderers.SalarioRenderer;
 
 public class PagosForm extends javax.swing.JFrame {
 
@@ -15,22 +19,131 @@ public class PagosForm extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.control = control;
+        
+        // Llenado de la tabla
         this.llenarTabla();
+        
+        // Llenado de ComboBoxes
         this.llenarEmpleados();
         this.llenarSalarios();
     }
 
+    private void guardar() {
+        if (this.txtID.getText().isEmpty()) {
+            this.agregar();
+        } else {
+            this.actualizar();
+        }
+    }
+
+    private void agregar() {
+        Empleado empleado = (Empleado) this.cbxEmpleado.getSelectedItem();
+        Salario salario = (Salario) this.cbxSalario.getSelectedItem();
+        LocalDate inicioPeriodo = this.dpInicioPeriodo.getDate();
+        LocalDate finPeriodo = this.dpFinPeriodo.getDate();
+        LocalDate fecha = this.dpFecha.getDate();
+        String estado = (String) this.cbxEstado.getSelectedItem();
+        String comentario = this.txtComentario.getText();
+        boolean seAgregoPago = this.control.agregarPago(new Pago(empleado , salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
+        if (seAgregoPago) {
+            JOptionPane.showMessageDialog(this, "Se ha creado el pago", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible crear el pago", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void actualizar() {
+        Long idPago = Long.parseLong(this.txtID.getText());
+        Empleado empleado = (Empleado) this.cbxEmpleado.getSelectedItem();
+        Salario salario = (Salario) this.cbxSalario.getSelectedItem();
+        LocalDate inicioPeriodo = this.dpInicioPeriodo.getDate();
+        LocalDate finPeriodo = this.dpFinPeriodo.getDate();
+        LocalDate fecha = this.dpFecha.getDate();
+        String estado = (String) this.cbxEstado.getSelectedItem();
+        String comentario = this.txtComentario.getText();
+        boolean seActualizoPago = this.control.actualizarPago(new Pago(idPago, empleado , salario, inicioPeriodo, finPeriodo, fecha, estado, comentario, null));
+        if (seActualizoPago) {
+            JOptionPane.showMessageDialog(this, "Se actualizó el pago", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible actualizar el pago", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void editar() {
+        Long idPagoSeleccionado = this.getIdPagoSeleccionado();
+        if (idPagoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un pago", "Información", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Pago pago = this.control.consultarPago(idPagoSeleccionado);
+        if (pago != null) {
+            this.llenarFormulario(pago);
+        }
+    }
+
+    private void cancelar() {
+        Long idPagoSeleccionado = this.getIdPagoSeleccionado();
+        if (idPagoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un pago", "Información", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Está seguro de cancelar el pago?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (opcionSeleccionada == JOptionPane.NO_OPTION) {
+                return;
+            }
+
+            Pago pagoCancelado = this.control.consultarPago(idPagoSeleccionado);
+            pagoCancelado.setEstado("CANCELADO");
+            boolean seCancelaPago = this.control.actualizarPago(pagoCancelado);
+            if (seCancelaPago) {
+                JOptionPane.showMessageDialog(this, "Se canceló el pago correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo cancelar el pago", "Información", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void llenarFormulario(Pago pago) {
+        this.txtID.setText(pago.getId().toString());
+        this.cbxEmpleado.setSelectedItem(pago.getEmpleado());
+        this.cbxSalario.setSelectedItem(pago.getSalario());
+        this.dpInicioPeriodo.setDate(pago.getInicioPeriodo());
+        this.dpFinPeriodo.setDate(pago.getFinPeriodo());
+        this.dpFecha.setDate(pago.getFecha());
+        this.cbxEstado.setSelectedItem(pago.getEstado());
+    }
+
+    private Long getIdPagoSeleccionado() {
+        int indiceFilaSeleccionada = this.tblPagos.getSelectedRow();
+        if (indiceFilaSeleccionada != -1) {
+            DefaultTableModel modelo = (DefaultTableModel) this.tblPagos.getModel();
+            int indiceColumnaId = 0;
+            Long idPagoSeleccionado = (Long) modelo.getValueAt(indiceFilaSeleccionada, indiceColumnaId);
+            return idPagoSeleccionado;
+        } else {
+            return null;
+        }
+    }
+
     private void llenarEmpleados() {
+        this.cbxEmpleado.setRenderer(new EmpleadoRenderer());
         List<Empleado> listaEmpleados = this.control.consultarEmpleados();
         listaEmpleados.forEach(empleado -> {
-            this.cbxEmpleado.addItem(empleado.getNombre() + " " + empleado.getApellidos());
+            this.cbxEmpleado.addItem(empleado);
         });
     }
 
     private void llenarSalarios() {
+        this.cbxSalario.setRenderer(new SalarioRenderer());
         List<Salario> listaSalarios = this.control.consultarSalarios();
         listaSalarios.forEach(salario -> {
-            this.cbxSalario.addItem(salario.getRol() + " / $" + salario.getCostePorHora());
+            this.cbxSalario.addItem(salario);
         });
     }
 
@@ -78,7 +191,7 @@ public class PagosForm extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPagos = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtSalario = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
@@ -97,8 +210,8 @@ public class PagosForm extends javax.swing.JFrame {
         lblComentario = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtComentario = new javax.swing.JTextArea();
-        cbxEmpleado = new javax.swing.JComboBox<>();
-        cbxSalario = new javax.swing.JComboBox<>();
+        cbxEmpleado = new javax.swing.JComboBox();
+        cbxSalario = new javax.swing.JComboBox();
         cbxEstado = new javax.swing.JComboBox<>();
         dpInicioPeriodo = new com.github.lgooddatepicker.components.DatePicker();
         dpFinPeriodo = new com.github.lgooddatepicker.components.DatePicker();
@@ -135,13 +248,14 @@ public class PagosForm extends javax.swing.JFrame {
                 "ID Pago", "Empleado", "Salario", "Inicio Periodo", "Fin Periodo", "Fecha", "Estado", "Horas Trabajadas", "Comentario"
             }
         ));
+        tblPagos.setFocusable(false);
         jScrollPane1.setViewportView(tblPagos);
 
-        btnEditar.setText("Actualizar");
-        btnEditar.setFocusable(false);
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setFocusable(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -194,9 +308,9 @@ public class PagosForm extends javax.swing.JFrame {
         txtComentario.setRows(5);
         jScrollPane2.setViewportView(txtComentario);
 
-        cbxEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --" }));
+        cbxEmpleado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Seleccionar --" }));
 
-        cbxSalario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --" }));
+        cbxSalario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Seleccionar --" }));
 
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccionar --", "PAGADO ", "CANCELADO", "PENDIENTE" }));
 
@@ -295,7 +409,7 @@ public class PagosForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -317,7 +431,7 @@ public class PagosForm extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,30 +456,30 @@ public class PagosForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        this.guardar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        this.guardar();
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        this.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+        this.editar();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JComboBox<String> cbxEmpleado;
+    private javax.swing.JComboBox cbxEmpleado;
     private javax.swing.JComboBox<String> cbxEstado;
-    private javax.swing.JComboBox<String> cbxSalario;
+    private javax.swing.JComboBox cbxSalario;
     private com.github.lgooddatepicker.components.DatePicker dpFecha;
     private com.github.lgooddatepicker.components.DatePicker dpFinPeriodo;
     private com.github.lgooddatepicker.components.DatePicker dpInicioPeriodo;

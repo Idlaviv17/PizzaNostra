@@ -1,6 +1,6 @@
 package entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -25,7 +25,7 @@ public class Empleado extends Usuario {
     private Long id;
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pago> pagos;
+    private List<Pago> pagos; 
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Horario> horario;
@@ -52,7 +52,7 @@ public class Empleado extends Usuario {
         this.vacacion = vacacion;
     }
 
-    public Empleado(Long id, List<Pago> pagos, List<Horario> horario, List<DiaTrabajado> diasTrabajados, PeriodoVacacional vacacion, String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Date fechaNacimiento) {
+    public Empleado(Long id, List<Pago> pagos, List<Horario> horario, List<DiaTrabajado> diasTrabajados, PeriodoVacacional vacacion, String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, LocalDate fechaNacimiento) {
         super(nombre, apellidos, correo, domicilio, rfc, estado, telefono, fechaNacimiento);
         this.id = id;
         this.pagos = pagos;

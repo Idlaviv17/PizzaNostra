@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,8 +43,7 @@ public class Usuario implements Serializable {
     private String telefono;
     
     @Column(name = "fecha_nacimiento", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     public Usuario() {
     }
@@ -53,7 +52,7 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, Date fechaNacimiento) {
+    public Usuario(String nombre, String apellidos, String correo, String domicilio, String rfc, Boolean estado, String telefono, LocalDate fechaNacimiento) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
@@ -64,7 +63,7 @@ public class Usuario implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Usuario(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, Date fechaNacimiento) {
+    public Usuario(Long id, String nombre, String apellidos, String correo, String domicilio, String rfc, String telefono, LocalDate fechaNacimiento) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -139,11 +138,11 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
     

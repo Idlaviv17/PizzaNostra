@@ -1,6 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,15 +29,12 @@ public class Horario implements Serializable {
     private Empleado empleado;
     
     @Column(name = "hora_inicio", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horaInicio;
+    private LocalDate horaInicio;
     
     @Column(name = "hora_fin", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horaFin;
+    private LocalDate horaFin;
     
     @Column(name = "dia", nullable = false)
-    @Temporal(TemporalType.DATE)
     private Date dia;
 
     public Horario() {
@@ -46,14 +44,14 @@ public class Horario implements Serializable {
         this.id = id;
     }
 
-    public Horario(Empleado empleado, Date horaInicio, Date horaFin, Date dia) {
+    public Horario(Empleado empleado, LocalDate horaInicio, LocalDate horaFin, Date dia) {
         this.empleado = empleado;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.dia = dia;
     }
 
-    public Horario(Long id, Empleado empleado, Date horaInicio, Date horaFin, Date dia) {
+    public Horario(Long id, Empleado empleado, LocalDate horaInicio, LocalDate horaFin, Date dia) {
         this.id = id;
         this.empleado = empleado;
         this.horaInicio = horaInicio;
@@ -77,19 +75,19 @@ public class Horario implements Serializable {
         this.empleado = empleado;
     }
 
-    public Date getHoraInicio() {
+    public LocalDate getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Date horaInicio) {
+    public void setHoraInicio(LocalDate horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Date getHoraFin() {
+    public LocalDate getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Date horaFin) {
+    public void setHoraFin(LocalDate horaFin) {
         this.horaFin = horaFin;
     }
 

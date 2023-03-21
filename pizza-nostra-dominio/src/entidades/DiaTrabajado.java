@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,16 +28,13 @@ public class DiaTrabajado implements Serializable {
     private Empleado empleado;
     
     @Column(name = "hora_entrada", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horaEntrada;
+    private LocalDate horaEntrada;
     
     @Column(name = "hora_salida", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horaSalida;
+    private LocalDate horaSalida;
     
     @Column(name = "fecha", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private LocalDate fecha;
 
     public DiaTrabajado() {
     }
@@ -46,14 +43,14 @@ public class DiaTrabajado implements Serializable {
         this.id = id;
     }
 
-    public DiaTrabajado(Empleado empleado, Date horaEntrada, Date horaSalida, Date fecha) {
+    public DiaTrabajado(Empleado empleado, LocalDate horaEntrada, LocalDate horaSalida, LocalDate fecha) {
         this.empleado = empleado;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
         this.fecha = fecha;
     }
 
-    public DiaTrabajado(Long id, Empleado empleado, Date horaEntrada, Date horaSalida, Date fecha) {
+    public DiaTrabajado(Long id, Empleado empleado, LocalDate horaEntrada, LocalDate horaSalida, LocalDate fecha) {
         this.id = id;
         this.empleado = empleado;
         this.horaEntrada = horaEntrada;
@@ -77,27 +74,27 @@ public class DiaTrabajado implements Serializable {
         this.empleado = empleado;
     }
 
-    public Date getHoraEntrada() {
+    public LocalDate getHoraEntrada() {
         return horaEntrada;
     }
 
-    public void setHoraEntrada(Date horaEntrada) {
+    public void setHoraEntrada(LocalDate horaEntrada) {
         this.horaEntrada = horaEntrada;
     }
 
-    public Date getHoraSalida() {
+    public LocalDate getHoraSalida() {
         return horaSalida;
     }
 
-    public void setHoraSalida(Date horaSalida) {
+    public void setHoraSalida(LocalDate horaSalida) {
         this.horaSalida = horaSalida;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

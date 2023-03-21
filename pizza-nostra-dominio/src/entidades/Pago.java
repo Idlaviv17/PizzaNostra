@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,16 +32,13 @@ public class Pago implements Serializable {
     private Salario salario;
     
     @Column(name = "inicio_periodo", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date inicioPeriodo;
+    private LocalDate inicioPeriodo;
     
     @Column(name = "fin_periodo", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date finPeriodo;
+    private LocalDate finPeriodo;
     
     @Column(name = "fecha", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private LocalDate fecha;
     
     @Column(name = "estado", nullable = false, length = 10, unique = false)
     private String estado;
@@ -49,7 +46,7 @@ public class Pago implements Serializable {
     @Column(name = "comentario", nullable = true, length = 300, unique = false)
     private String comentario;
     
-    @Column(name = "horas_trabajadas", nullable = false)
+    @Column(name = "horas_trabajadas", nullable = true)
     private Integer horasTrabajadas;
 
     public Pago() {
@@ -59,7 +56,7 @@ public class Pago implements Serializable {
         this.id = id;
     }
 
-    public Pago(Empleado empleado, Salario salario, Date inicioPeriodo, Date finPeriodo, Date fecha, String estado, String comentario, Integer horasTrabajadas) {
+    public Pago(Empleado empleado, Salario salario, LocalDate inicioPeriodo, LocalDate finPeriodo, LocalDate fecha, String estado, String comentario, Integer horasTrabajadas) {
         this.empleado = empleado;
         this.salario = salario;
         this.inicioPeriodo = inicioPeriodo;
@@ -70,7 +67,7 @@ public class Pago implements Serializable {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Pago(Long id, Empleado empleado, Salario salario, Date inicioPeriodo, Date finPeriodo, Date fecha, String estado, String comentario, Integer horasTrabajadas) {
+    public Pago(Long id, Empleado empleado, Salario salario, LocalDate inicioPeriodo, LocalDate finPeriodo, LocalDate fecha, String estado, String comentario, Integer horasTrabajadas) {
         this.id = id;
         this.empleado = empleado;
         this.salario = salario;
@@ -106,27 +103,27 @@ public class Pago implements Serializable {
         this.salario = salario;
     }
 
-    public Date getInicioPeriodo() {
+    public LocalDate getInicioPeriodo() {
         return inicioPeriodo;
     }
 
-    public void setInicioPeriodo(Date inicioPeriodo) {
+    public void setInicioPeriodo(LocalDate inicioPeriodo) {
         this.inicioPeriodo = inicioPeriodo;
     }
 
-    public Date getFinPeriodo() {
+    public LocalDate getFinPeriodo() {
         return finPeriodo;
     }
 
-    public void setFinPeriodo(Date finPeriodo) {
+    public void setFinPeriodo(LocalDate finPeriodo) {
         this.finPeriodo = finPeriodo;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

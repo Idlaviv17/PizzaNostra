@@ -1,7 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,12 +28,10 @@ public class PeriodoVacacional implements Serializable {
     private Empleado empleado;
     
     @Column(name = "fecha_inicio", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
+    private LocalDate fechaInicio;
 
     @Column(name = "fecha_final", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaFinal;
+    private LocalDate fechaFinal;
 
     public PeriodoVacacional() {
     }
@@ -42,13 +40,13 @@ public class PeriodoVacacional implements Serializable {
         this.id = id;
     }
 
-    public PeriodoVacacional(Empleado empleado, Date fechaInicio, Date fechaFinal) {
+    public PeriodoVacacional(Empleado empleado, LocalDate fechaInicio, LocalDate fechaFinal) {
         this.empleado = empleado;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
     }
 
-    public PeriodoVacacional(Long id, Empleado empleado, Date fechaInicio, Date fechaFinal) {
+    public PeriodoVacacional(Long id, Empleado empleado, LocalDate fechaInicio, LocalDate fechaFinal) {
         this.id = id;
         this.empleado = empleado;
         this.fechaInicio = fechaInicio;
@@ -71,19 +69,19 @@ public class PeriodoVacacional implements Serializable {
         this.empleado = empleado;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFinal() {
+    public LocalDate getFechaFinal() {
         return fechaFinal;
     }
 
-    public void setFechaFinal(Date fechaFinal) {
+    public void setFechaFinal(LocalDate fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
     
