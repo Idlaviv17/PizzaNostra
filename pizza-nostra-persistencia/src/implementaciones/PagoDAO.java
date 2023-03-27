@@ -91,4 +91,19 @@ public class PagoDAO implements IPagoDAO {
         }
     }
 
+    @Override
+    public List<Pago> consultarPorEstado(String estado) {
+        try {
+            EntityManager em = this.conexionBD.crearConexion();
+
+            String jpqlQuery = "SELECT j FROM Pago j WHERE j.estado = '" + estado + "'";
+            TypedQuery<Pago> query = em.createQuery(jpqlQuery, Pago.class);
+
+            return query.getResultList();
+        } catch (IllegalStateException ex) {
+            System.err.println("No se pudieron consultar los pagos");
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -13,10 +13,10 @@ import java.util.List;
 
 public class Control implements IControl {
 
-    private IPagoDAO pagos;
-    private IEmpleadoDAO empleados;
-    private ISalarioDAO salarios;
-    private IDiaTrabajadoDAO diasTrabajados;
+    private final IPagoDAO pagos;
+    private final IEmpleadoDAO empleados;
+    private final ISalarioDAO salarios;
+    private final IDiaTrabajadoDAO diasTrabajados;
 
     public Control() {
         this.pagos = DAOSFactory.crearPagosDAO();
@@ -49,6 +49,11 @@ public class Control implements IControl {
     public List<Pago> consultarPagos() {
         return pagos.consultarTodos();
     }
+    
+    @Override
+    public List<Pago> consultarPagosPorEstado(String estado) {
+        return pagos.consultarPorEstado(estado);
+    }
 
     @Override
     public boolean agregarEmpleado(Empleado empleado) {
@@ -73,6 +78,11 @@ public class Control implements IControl {
     @Override
     public List<Empleado> consultarEmpleados() {
         return empleados.consultarTodos();
+    }
+    
+    @Override
+    public List<Empleado> consultarEmpleadosPorEstado(Boolean estado) {
+        return empleados.consultarPorEstado(estado);
     }
 
     @Override

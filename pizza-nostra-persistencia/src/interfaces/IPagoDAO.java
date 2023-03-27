@@ -13,4 +13,6 @@ public interface IPagoDAO {
     public Pago consultar(Long idPago);
 
     public List<Pago> consultarTodos();
+    
+    public List<Pago> consultarPorEstado(String estado);
 }

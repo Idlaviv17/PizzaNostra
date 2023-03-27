@@ -17,6 +17,8 @@ public interface IControl {
     public Pago consultarPago(Long idPago);
 
     public List<Pago> consultarPagos();
+    
+    public List<Pago> consultarPagosPorEstado(String estado);
 
     public boolean agregarEmpleado(Empleado empleado);
 
@@ -27,6 +29,8 @@ public interface IControl {
     public Empleado consultarEmpleado(Long idEmpleado);
 
     public List<Empleado> consultarEmpleados();
+    
+    public List<Empleado> consultarEmpleadosPorEstado(Boolean estado);
 
     public boolean agregarSalario(Salario salario);
 

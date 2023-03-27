@@ -13,4 +13,6 @@ public interface IEmpleadoDAO {
     public Empleado consultar(Long idEmpleado);
 
     public List<Empleado> consultarTodos();
+    
+    public List<Empleado> consultarPorEstado(Boolean estado);
 }

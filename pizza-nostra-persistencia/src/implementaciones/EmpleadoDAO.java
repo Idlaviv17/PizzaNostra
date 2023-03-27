@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 public class EmpleadoDAO implements IEmpleadoDAO {
-    
+
     private final IConexionBD conexionBD;
 
     public EmpleadoDAO(IConexionBD conexionBD) {
@@ -90,5 +90,20 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return null;
         }
     }
-    
+
+    @Override
+    public List<Empleado> consultarPorEstado(Boolean estado) {
+        try {
+            EntityManager em = this.conexionBD.crearConexion();
+
+            String jpqlQuery = "SELECT j FROM Empleado j WHERE j.estado = " + estado;
+            TypedQuery<Empleado> query = em.createQuery(jpqlQuery, Empleado.class);
+
+            return query.getResultList();
+        } catch (IllegalStateException ex) {
+            System.err.println("No se pudieron consultar los empleados");
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }
