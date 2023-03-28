@@ -7,15 +7,21 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class MenuPagosForm extends javax.swing.JFrame {
-    
+
     private final IControl control;
-    
+
     public MenuPagosForm(IControl control) {
         initComponents();
         this.setExtendedState(MenuPagosForm.MAXIMIZED_BOTH);
@@ -27,19 +33,34 @@ public class MenuPagosForm extends javax.swing.JFrame {
 
         // Llenado de ComboBoxes
         activarListeners();
-        
+
     }
-    
+
     private void agregar() {
-        new PagoForm(control, this, null, null, 0);
+        new PagoDialog(control, this, null, null, 0);
     }
-    
+
     private void agregarTodos() {
-        for (Empleado empleado : control.consultarEmpleadosPorEstado(false)) {
-            new PagoForm(control, this, null, empleado, 3);
-        }
+        List<Empleado> empleados = control.consultarEmpleadosPorEstado(false);
+        showNextPagoDialog(empleados, 0);
     }
-    
+
+    private void showNextPagoDialog(List<Empleado> empleados, int index) {
+        if (index >= empleados.size()) {
+            llenarTabla();
+            return; // stop recursion
+        }
+
+        PagoDialog pagoDialog = new PagoDialog(control, this, null, empleados.get(index), 3);
+        pagoDialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                showNextPagoDialog(empleados, index + 1); // show next dialog
+            }
+        });
+        pagoDialog.setVisible(true);
+    }
+
     private void actualizar() {
         Long idPagoSeleccionado = getIdPagoSeleccionado();
         if (idPagoSeleccionado == null) {
@@ -48,40 +69,40 @@ public class MenuPagosForm extends javax.swing.JFrame {
         }
         Pago pago = this.control.consultarPago(idPagoSeleccionado);
         if (pago != null) {
-            new PagoForm(control, this, pago, null, 1);
+            //new PagoForm(control, this, pago, null, 1);
+            new PagoDialog(control, this, pago, null, 1);
         }
     }
-    
+
     private void consultar() {
         Pago pagoSeleccionado = verificarPagoSeleccionado();
         if (pagoSeleccionado != null) {
-            new PagoForm(control, this, pagoSeleccionado, null, 2);
+            //new PagoForm(control, this, pagoSeleccionado, null, 2);
+            new PagoDialog(control, this, pagoSeleccionado, null, 2);
         }
     }
-    
+
     private void cancelar() {
         Long idPagoSeleccionado = getIdPagoSeleccionado();
         if (idPagoSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un pago", "Información", JOptionPane.WARNING_MESSAGE);
         } else {
             int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Está seguro de cancelar el pago?", "Confirmación", JOptionPane.YES_NO_OPTION);
-            
-            if (opcionSeleccionada == JOptionPane.NO_OPTION) {
-                return;
-            }
-            
-            Pago pagoCancelado = control.consultarPago(idPagoSeleccionado);
-            pagoCancelado.setEstado("CANCELADO");
-            boolean seCancelaPago = control.actualizarPago(pagoCancelado);
-            if (seCancelaPago) {
-                JOptionPane.showMessageDialog(this, "Se canceló el pago correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-                llenarTabla();
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo cancelar el pago", "Información", JOptionPane.ERROR_MESSAGE);
+
+            if (opcionSeleccionada == JOptionPane.YES_OPTION) {
+                Pago pagoCancelado = control.consultarPago(idPagoSeleccionado);
+                pagoCancelado.setEstado("CANCELADO");
+                boolean seCancelaPago = control.actualizarPago(pagoCancelado);
+                if (seCancelaPago) {
+                    JOptionPane.showMessageDialog(this, "Se canceló el pago correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo cancelar el pago", "Información", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
-    
+
     private Long getIdPagoSeleccionado() {
         int indiceFilaSeleccionada = tblPagos.getSelectedRow();
         if (indiceFilaSeleccionada != -1) {
@@ -93,7 +114,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     protected void llenarTabla() {
         List<String> estadosSeleccionados = new ArrayList<>();
         if (cbPagosPagados.isSelected()) {
@@ -118,7 +139,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
                 boolean activosInactivosSeleccionados = cbEmpleadosActivos.isSelected() && cbEmpleadosInactivos.isSelected();
                 boolean soloActivosSeleccionados = cbEmpleadosActivos.isSelected() && isActivo;
                 boolean soloInactivosSeleccionados = cbEmpleadosInactivos.isSelected() && isInactivo;
-                
+
                 if (activosInactivosSeleccionados || soloActivosSeleccionados || soloInactivosSeleccionados) {
                     modeloTabla.addRow(new Object[]{
                         pago.getId(),
@@ -135,10 +156,19 @@ public class MenuPagosForm extends javax.swing.JFrame {
             }
         }
 
+        if (txtBusqueda.getText().trim().length() != 0) {
+            TableRowSorter<TableModel> sorter = new TableRowSorter<>(modeloTabla);
+            RowFilter<Object, Object> filter = RowFilter.regexFilter("(?i)^" + txtBusqueda.getText(), 1, Pattern.CASE_INSENSITIVE);
+            sorter.setRowFilter(filter);
+            tblPagos.setRowSorter(sorter);
+        } else {
+            tblPagos    .setRowSorter(null);
+        }
+
         //Actualizar la tabla correctamente, de acuerdo a BD
         tblPagos.repaint();
     }
-    
+
     private void activarListeners() {
         tblPagos.addMouseListener(new MouseAdapter() {
             @Override
@@ -148,7 +178,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         ItemListener checkBoxListener = (ItemEvent e) -> {
             llenarTabla();
         };
@@ -157,9 +187,8 @@ public class MenuPagosForm extends javax.swing.JFrame {
         cbPagosCancelados.addItemListener(checkBoxListener);
         cbEmpleadosActivos.addItemListener(checkBoxListener);
         cbEmpleadosInactivos.addItemListener(checkBoxListener);
-        
     }
-    
+
     private Pago verificarPagoSeleccionado() {
         Long idPagoSeleccionado = getIdPagoSeleccionado();
         if (idPagoSeleccionado == null) {
@@ -172,10 +201,10 @@ public class MenuPagosForm extends javax.swing.JFrame {
         }
         return pago;
     }
-    
+
     private void actualizarModeloTabla() {
         tblPagos.setDefaultEditor(Object.class, null);
-        
+
     }
 
     /**
@@ -192,9 +221,9 @@ public class MenuPagosForm extends javax.swing.JFrame {
         tblPagos = new javax.swing.JTable();
         btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        txtSalario = new javax.swing.JTextField();
+        txtBusqueda = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnBusqueda = new javax.swing.JButton();
         cbPagosPagados = new javax.swing.JCheckBox();
         cbPagosPendientes = new javax.swing.JCheckBox();
         cbPagosCancelados = new javax.swing.JCheckBox();
@@ -252,7 +281,12 @@ public class MenuPagosForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/buscar.png"))); // NOI18N
+        btnBusqueda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/buscar.png"))); // NOI18N
+        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusquedaActionPerformed(evt);
+            }
+        });
 
         cbPagosPagados.setSelected(true);
         cbPagosPagados.setText("Pagados");
@@ -299,9 +333,9 @@ public class MenuPagosForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(btnBusqueda))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -315,9 +349,9 @@ public class MenuPagosForm extends javax.swing.JFrame {
                         .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSalario, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,9 +396,14 @@ public class MenuPagosForm extends javax.swing.JFrame {
         agregarTodos();
     }//GEN-LAST:event_btnFilaActivosActionPerformed
 
+    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
+        llenarTabla();
+    }//GEN-LAST:event_btnBusquedaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBusqueda;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnFilaActivos;
@@ -373,9 +412,8 @@ public class MenuPagosForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbPagosCancelados;
     private javax.swing.JCheckBox cbPagosPagados;
     private javax.swing.JCheckBox cbPagosPendientes;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPagos;
-    private javax.swing.JTextField txtSalario;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

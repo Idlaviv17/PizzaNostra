@@ -48,9 +48,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="txtSalario" min="-2" pref="375" max="-2" attributes="0"/>
+                      <Component id="txtBusqueda" min="-2" pref="375" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBusqueda" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" pref="519" max="32767" attributes="0"/>
               </Group>
@@ -69,9 +69,9 @@
                   </Group>
                   <Component id="btnCancelar" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnBusqueda" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnAgregar" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="txtSalario" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtBusqueda" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -152,7 +152,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtSalario">
+    <Component class="javax.swing.JTextField" name="txtBusqueda">
     </Component>
     <Component class="javax.swing.JButton" name="btnConsultar">
       <Properties>
@@ -163,12 +163,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnBusqueda">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imgs/buscar.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBusquedaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbPagosPagados">
       <Properties>
