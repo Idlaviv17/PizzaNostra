@@ -49,7 +49,6 @@ public class PagoDialog extends javax.swing.JDialog {
         llenarSalarios();
         actualizarOpciones();
         cargarDatosPago();
-        this.setModal(true);
         this.setVisible(true);
     }
 
@@ -284,7 +283,6 @@ public class PagoDialog extends javax.swing.JDialog {
     }
 
     private void cerrarVentana() {
-        //this.setModal(false);
         this.dispose();
     }
 
