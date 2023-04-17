@@ -47,8 +47,9 @@ public class PagoDialog extends javax.swing.JDialog {
         activarListeners();
         llenarEmpleados();
         llenarSalarios();
-        actualizarOpciones();
+        actualizarOpcionesCampos();
         cargarDatosPago();
+        this.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
         this.setVisible(true);
     }
 
@@ -140,7 +141,7 @@ public class PagoDialog extends javax.swing.JDialog {
         pago.setComentario(txtComentario.getText());
     }
 
-    private void actualizarOpciones() {
+    private void actualizarOpcionesCampos() {
         //Agregar "CANCELADO" al modelo
         String[] options = {"-- Seleccionar --", "PAGADO", "PENDIENTE", "CANCELADO"};
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(options);
@@ -180,8 +181,8 @@ public class PagoDialog extends javax.swing.JDialog {
     private void llenarEmpleados() {
         this.cbxEmpleado.setRenderer(new EmpleadoRenderer());
         List<Empleado> listaEmpleados = control.consultarEmpleadosPorEstado(false);
-        listaEmpleados.forEach(empleado -> {
-            this.cbxEmpleado.addItem(empleado);
+        listaEmpleados.forEach(empleadoLista -> {
+            this.cbxEmpleado.addItem(empleadoLista);
         });
     }
 
@@ -245,8 +246,8 @@ public class PagoDialog extends javax.swing.JDialog {
     }
 
     private int calcularHorasTrabajadas() {
-        Empleado empleado = (Empleado) cbxEmpleado.getSelectedItem();
-        List<DiaTrabajado> dias = control.consultarDiasTrabajadosPorEmpleado(empleado);
+        Empleado empleadoSeleccionado = (Empleado) cbxEmpleado.getSelectedItem();
+        List<DiaTrabajado> dias = control.consultarDiasTrabajadosPorEmpleado(empleadoSeleccionado);
 
         int horasTrabajadas = 0;
 
@@ -314,6 +315,7 @@ public class PagoDialog extends javax.swing.JDialog {
         dpInicioPeriodo = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         txtComentario.setColumns(20);
         txtComentario.setRows(5);

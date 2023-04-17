@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -29,11 +30,14 @@ public class MenuPagosForm extends javax.swing.JFrame {
 
         // Llenado de la tabla
         actualizarModeloTabla();
-        llenarTabla();
-
-        // Llenado de ComboBoxes
-        activarListeners();
-
+        try {
+            llenarTabla();
+            tblPagos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            // Llenado de ComboBoxes
+            activarListeners();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ha ocasionado un error de comunicación con las base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void agregar() {
@@ -48,17 +52,16 @@ public class MenuPagosForm extends javax.swing.JFrame {
     private void showNextPagoDialog(List<Empleado> empleados, int index) {
         if (index >= empleados.size()) {
             llenarTabla();
-            return; // stop recursion
+            return;
         }
 
         PagoDialog pagoDialog = new PagoDialog(control, this, null, empleados.get(index), 3);
         pagoDialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                showNextPagoDialog(empleados, index + 1); // show next dialog
+                showNextPagoDialog(empleados, index + 1);
             }
         });
-        pagoDialog.setVisible(true);
     }
 
     private void actualizar() {
