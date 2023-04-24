@@ -26,7 +26,6 @@ public class DiaTrabajadoDAO implements IDiaTrabajadoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo agregar el dia trabajado");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -41,7 +40,6 @@ public class DiaTrabajadoDAO implements IDiaTrabajadoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar el dia trabajado");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -59,7 +57,6 @@ public class DiaTrabajadoDAO implements IDiaTrabajadoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar el dia trabajado");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -71,7 +68,6 @@ public class DiaTrabajadoDAO implements IDiaTrabajadoDAO {
             return em.find(DiaTrabajado.class, idDiaTrabajado);
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar el dia rabajado " + idDiaTrabajado);
-            ex.printStackTrace();
             return null;
         }
     }
@@ -87,7 +83,6 @@ public class DiaTrabajadoDAO implements IDiaTrabajadoDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los dias trabajados");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -104,7 +99,6 @@ public class DiaTrabajadoDAO implements IDiaTrabajadoDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los dias trabajados");
-            ex.printStackTrace();
             return null;
         }
     }

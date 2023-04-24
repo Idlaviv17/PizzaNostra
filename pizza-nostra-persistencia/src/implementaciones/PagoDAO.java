@@ -25,7 +25,6 @@ public class PagoDAO implements IPagoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo agregar el pago");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -40,7 +39,6 @@ public class PagoDAO implements IPagoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar el pago");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -58,7 +56,6 @@ public class PagoDAO implements IPagoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar el pago");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -70,7 +67,6 @@ public class PagoDAO implements IPagoDAO {
             return em.find(Pago.class, idPago);
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar el pago " + idPago);
-            ex.printStackTrace();
             return null;
         }
     }
@@ -86,7 +82,6 @@ public class PagoDAO implements IPagoDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los pagos");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -102,7 +97,6 @@ public class PagoDAO implements IPagoDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los pagos");
-            ex.printStackTrace();
             return null;
         }
     }

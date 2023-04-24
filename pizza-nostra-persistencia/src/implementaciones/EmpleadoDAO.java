@@ -25,7 +25,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo agregar el empleado");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -40,7 +39,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar el empleado");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -58,7 +56,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar el empleado");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -70,7 +67,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return em.find(Empleado.class, idEmpleado);
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar el empleado " + idEmpleado);
-            ex.printStackTrace();
             return null;
         }
     }
@@ -86,7 +82,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los empleados");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -102,7 +97,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los empleados");
-            ex.printStackTrace();
             return null;
         }
     }

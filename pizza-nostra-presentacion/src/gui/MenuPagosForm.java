@@ -10,11 +10,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -36,12 +40,12 @@ public class MenuPagosForm extends javax.swing.JFrame {
             // Llenado de ComboBoxes
             activarListeners();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ha ocasionado un error de comunicación con las base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarErrorBD();
         }
     }
 
     private void agregar() {
-        new PagoDialog(control, this, null, null, 0);
+        PagoDialog pagoDialog = new PagoDialog(control, this, null, null, 0);
     }
 
     private void agregarTodos() {
@@ -73,15 +77,14 @@ public class MenuPagosForm extends javax.swing.JFrame {
         Pago pago = this.control.consultarPago(idPagoSeleccionado);
         if (pago != null) {
             //new PagoForm(control, this, pago, null, 1);
-            new PagoDialog(control, this, pago, null, 1);
+            PagoDialog pagoDialog = new PagoDialog(control, this, pago, null, 1);
         }
     }
 
     private void consultar() {
         Pago pagoSeleccionado = verificarPagoSeleccionado();
         if (pagoSeleccionado != null) {
-            //new PagoForm(control, this, pagoSeleccionado, null, 2);
-            new PagoDialog(control, this, pagoSeleccionado, null, 2);
+            PagoDialog pagoDialog = new PagoDialog(control, this, pagoSeleccionado, null, 2);
         }
     }
 
@@ -107,7 +110,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
     }
 
     private Long getIdPagoSeleccionado() {
-        int indiceFilaSeleccionada = tblPagos.getSelectedRow();
+        int indiceFilaSeleccionada = tblPagos.convertRowIndexToModel(tblPagos.getSelectedRow());
         if (indiceFilaSeleccionada != -1) {
             DefaultTableModel modelo = (DefaultTableModel) tblPagos.getModel();
             int indiceColumnaId = 0;
@@ -118,7 +121,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
         }
     }
 
-    protected void llenarTabla() {
+    protected final void llenarTabla() {
         List<String> estadosSeleccionados = new ArrayList<>();
         if (cbPagosPagados.isSelected()) {
             estadosSeleccionados.add("PAGADO");
@@ -159,6 +162,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
             }
         }
 
+        //Actualizar lista de acuerdo a busqueda
         if (txtBusqueda.getText().trim().length() != 0) {
             TableRowSorter<TableModel> sorter = new TableRowSorter<>(modeloTabla);
             RowFilter<Object, Object> filter = RowFilter.regexFilter("(?i)" + txtBusqueda.getText(), 1, Pattern.CASE_INSENSITIVE);
@@ -168,11 +172,12 @@ public class MenuPagosForm extends javax.swing.JFrame {
             tblPagos.setRowSorter(null);
         }
 
-        //Actualizar la tabla correctamente, de acuerdo a BD
+        //Actualizar vista de tabla
         tblPagos.repaint();
     }
 
     private void activarListeners() {
+        //Doble click a fila de tabla
         tblPagos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -182,14 +187,37 @@ public class MenuPagosForm extends javax.swing.JFrame {
             }
         });
 
+        //Check boxes
         ItemListener checkBoxListener = (ItemEvent e) -> {
             llenarTabla();
         };
-        cbPagosPagados.addItemListener(checkBoxListener);
-        cbPagosPendientes.addItemListener(checkBoxListener);
-        cbPagosCancelados.addItemListener(checkBoxListener);
-        cbEmpleadosActivos.addItemListener(checkBoxListener);
-        cbEmpleadosInactivos.addItemListener(checkBoxListener);
+
+        List<JCheckBox> checkBoxList = Arrays.asList(
+                cbPagosPagados, cbPagosPendientes, cbPagosCancelados,
+                cbEmpleadosActivos, cbEmpleadosInactivos);
+        for (JCheckBox checkBox : checkBoxList) {
+            checkBox.addItemListener(checkBoxListener);
+        }
+
+        //Buscador
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // Called when text is inserted into the document
+                llenarTabla();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // Called when text is removed from the document
+                llenarTabla();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                llenarTabla();
+            }
+        });
     }
 
     private Pago verificarPagoSeleccionado() {
@@ -210,11 +238,12 @@ public class MenuPagosForm extends javax.swing.JFrame {
 
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    private void mostrarErrorBD() {
+        JOptionPane.showMessageDialog(this,
+                "Ha ocasionado un error de comunicación con las base de datos", "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

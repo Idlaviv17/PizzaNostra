@@ -23,7 +23,7 @@ public class PagoDialog extends javax.swing.JDialog {
     private final MenuPagosForm menuPagosForm;
     private final LocalDate fechaHoy;
     private Pago pago;
-    private Empleado empleado;
+    private final Empleado empleado;
     private final Integer operacion;
     private static Salario ultimoSalario;
     private static LocalDate ultimaFechaInicioPeriodo;

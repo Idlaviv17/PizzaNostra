@@ -1,6 +1,5 @@
 package implementaciones;
 
-import entidades.Pago;
 import entidades.Salario;
 import interfaces.IConexionBD;
 import interfaces.ISalarioDAO;
@@ -26,7 +25,6 @@ public class SalarioDAO implements ISalarioDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo agregar el salario");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -41,7 +39,6 @@ public class SalarioDAO implements ISalarioDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar el salario");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -59,7 +56,6 @@ public class SalarioDAO implements ISalarioDAO {
             return true;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar el salario");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -71,7 +67,6 @@ public class SalarioDAO implements ISalarioDAO {
             return em.find(Salario.class, idSalario);
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar el salario " + idSalario);
-            ex.printStackTrace();
             return null;
         }
     }
@@ -87,7 +82,6 @@ public class SalarioDAO implements ISalarioDAO {
             return query.getResultList();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los salarios");
-            ex.printStackTrace();
             return null;
         }
     }
