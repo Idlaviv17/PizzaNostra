@@ -1,7 +1,7 @@
 package main;
 
 import control.*;
-import gui.MenuPagosForm;
+import gui.*;
 import javax.swing.UIManager;
 
 public class Main {
@@ -33,7 +33,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 IControl control = new Control();
-                new MenuPagosForm(control).setVisible(true);
+                new MenuSalariosForm(control).setVisible(true);
             }
         });
     }

@@ -342,7 +342,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
         cbEmpleadosActivos.setSelected(true);
         cbEmpleadosActivos.setText("Activos");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Pagos");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

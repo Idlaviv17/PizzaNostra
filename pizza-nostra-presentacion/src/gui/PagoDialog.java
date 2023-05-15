@@ -81,7 +81,7 @@ public class PagoDialog extends javax.swing.JDialog {
                 cerrarVentana();
                 menuPagosForm.llenarTabla();
             } else {
-                JOptionPane.showMessageDialog(this, "No fue posible registrado el pago", "Información", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No fue posible registrar el pago", "Información", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
