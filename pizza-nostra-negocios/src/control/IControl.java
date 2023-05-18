@@ -12,8 +12,6 @@ public interface IControl {
 
     public boolean actualizarPago(Pago pago);
 
-    public boolean eliminarPago(Pago pago);
-
     public Pago consultarPago(Long idPago);
 
     public List<Pago> consultarPagos();
@@ -23,8 +21,6 @@ public interface IControl {
     public boolean agregarEmpleado(Empleado empleado);
 
     public boolean actualizarEmpleado(Empleado empleado);
-
-    public boolean eliminarEmpleado(Empleado empleado);
 
     public Empleado consultarEmpleado(Long idEmpleado);
 

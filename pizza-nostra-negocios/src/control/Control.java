@@ -36,11 +36,6 @@ public class Control implements IControl {
     }
 
     @Override
-    public boolean eliminarPago(Pago pago) {
-        return pagos.eliminar(pago);
-    }
-
-    @Override
     public Pago consultarPago(Long idPago) {
         return pagos.consultar(idPago);
     }
@@ -63,11 +58,6 @@ public class Control implements IControl {
     @Override
     public boolean actualizarEmpleado(Empleado empleado) {
         return empleados.actualizar(empleado);
-    }
-
-    @Override
-    public boolean eliminarEmpleado(Empleado empleado) {
-        return empleados.eliminar(empleado);
     }
 
     @Override
