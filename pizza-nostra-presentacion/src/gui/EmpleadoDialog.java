@@ -210,7 +210,7 @@ public class EmpleadoDialog extends javax.swing.JDialog {
         txtTelefono.setText("");
         txtCorreo.setText("");
         txtDomicilio.setText("");
-        dpFechaNacimiento.setText("");
+        dpFechaNacimiento.setDate(null);
         txtRFC.setText("");
     }
 
