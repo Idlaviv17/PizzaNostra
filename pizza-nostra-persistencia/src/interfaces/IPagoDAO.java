@@ -8,8 +8,6 @@ public interface IPagoDAO {
 
     public boolean actualizar(Pago pago);
 
-    public boolean eliminar(Pago pago);
-
     public Pago consultar(Long idPago);
 
     public List<Pago> consultarTodos();

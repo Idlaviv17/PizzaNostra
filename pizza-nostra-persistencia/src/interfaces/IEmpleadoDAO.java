@@ -8,8 +8,6 @@ public interface IEmpleadoDAO {
 
     public boolean actualizar(Empleado empleado);
 
-    public boolean eliminar(Empleado empleado);
-
     public Empleado consultar(Long idEmpleado);
 
     public List<Empleado> consultarTodos();

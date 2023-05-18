@@ -44,23 +44,6 @@ public class PagoDAO implements IPagoDAO {
     }
 
     @Override
-    public boolean eliminar(Pago pago) {
-        try {
-            EntityManager em = this.conexionBD.crearConexion();
-            em.getTransaction().begin();
-            if (!em.contains(pago)) {
-                pago = em.merge(pago);
-            }
-            em.remove(pago);
-            em.getTransaction().commit();
-            return true;
-        } catch (IllegalStateException ex) {
-            System.err.println("No se pudo eliminar el pago");
-            return false;
-        }
-    }
-
-    @Override
     public Pago consultar(Long idPago) {
         try {
             EntityManager em = this.conexionBD.crearConexion();

@@ -44,23 +44,6 @@ public class EmpleadoDAO implements IEmpleadoDAO {
     }
 
     @Override
-    public boolean eliminar(Empleado empleado) {
-        try {
-            EntityManager em = this.conexionBD.crearConexion();
-            em.getTransaction().begin();
-            if (!em.contains(empleado)) {
-                empleado = em.merge(empleado);
-            }
-            em.remove(empleado);
-            em.getTransaction().commit();
-            return true;
-        } catch (IllegalStateException ex) {
-            System.err.println("No se pudo eliminar el empleado");
-            return false;
-        }
-    }
-
-    @Override
     public Empleado consultar(Long idEmpleado) {
         try {
             EntityManager em = this.conexionBD.crearConexion();
