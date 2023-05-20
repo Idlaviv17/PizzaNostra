@@ -28,12 +28,12 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="292" max="-2" attributes="0"/>
-                      <Component id="btnActualizar" min="-2" pref="83" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="289" max="-2" attributes="0"/>
+                      <Component id="btnActualizar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" pref="83" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtBusqueda" pref="421" max="32767" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <Component id="txtBusqueda" min="-2" pref="403" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnBusqueda" min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
@@ -155,6 +155,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -199,6 +202,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -235,6 +241,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnActualizar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Actualizar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -244,6 +253,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -253,6 +265,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnMenuPrincipal">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Menu Principal"/>
       </Properties>
       <Events>

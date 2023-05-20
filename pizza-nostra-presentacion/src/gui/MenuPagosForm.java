@@ -26,9 +26,9 @@ import javax.swing.table.TableRowSorter;
 public class MenuPagosForm extends javax.swing.JFrame {
 
     private final IControl control;
-    private final MenuPrincipal menuPrincipal;
+    private final MenuPrincipalForm menuPrincipal;
 
-    public MenuPagosForm(IControl control, MenuPrincipal menuPrincipal) {
+    public MenuPagosForm(IControl control, MenuPrincipalForm menuPrincipal) {
         initComponents();
         this.setExtendedState(MenuPagosForm.MAXIMIZED_BOTH);
         this.control = control;
@@ -276,6 +276,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
         setTitle("Pagos");
         setResizable(false);
 
+        btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.setFocusable(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +299,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
         tblPagos.setFocusable(false);
         jScrollPane1.setViewportView(tblPagos);
 
+        btnActualizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         btnActualizar.setFocusable(false);
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -306,6 +308,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setFocusable(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -314,6 +317,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
             }
         });
 
+        btnConsultar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnConsultar.setText("Consultar");
         btnConsultar.setFocusable(false);
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -337,6 +341,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
 
         cbPagosCancelados.setText("Cancelados");
 
+        btnFilaActivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnFilaActivos.setText("Agregar todos");
         btnFilaActivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,6 +360,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Empleados");
 
+        btnMenuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnMenuPrincipal.setText("Menu Principal");
         btnMenuPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,10 +393,10 @@ public class MenuPagosForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBusqueda))
@@ -429,7 +435,7 @@ public class MenuPagosForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbEmpleadosInactivos)
                         .addGap(30, 30, 30)
-                        .addComponent(btnFilaActivos)
+                        .addComponent(btnFilaActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnMenuPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())

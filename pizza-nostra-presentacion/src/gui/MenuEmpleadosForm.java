@@ -6,6 +6,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -19,9 +21,9 @@ import javax.swing.table.TableRowSorter;
 public class MenuEmpleadosForm extends javax.swing.JFrame {
 
     private final IControl control;
-    private final MenuPrincipal menuPrincipal;
+    private final MenuPrincipalForm menuPrincipal;
 
-    public MenuEmpleadosForm(IControl control, MenuPrincipal menuPrincipal) {
+    public MenuEmpleadosForm(IControl control, MenuPrincipalForm menuPrincipal) {
         initComponents();
         this.setExtendedState(MenuEmpleadosForm.MAXIMIZED_BOTH);
         this.control = control;
@@ -95,48 +97,74 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
         }
     }
 
-    protected final void llenarTabla() {
+protected final void llenarTabla() {
+    // Clear the table model
+    DefaultTableModel modeloTabla = (DefaultTableModel) tblEmpleados.getModel();
+    modeloTabla.setRowCount(0);
 
-        // Clear the table model
-        DefaultTableModel modeloTabla = (DefaultTableModel) tblEmpleados.getModel();
-        modeloTabla.setRowCount(0);
+    List<Empleado> empleadosActivos = new ArrayList<>();
+    List<Empleado> empleadosInactivos = new ArrayList<>();
 
-        // Loop over the selected statuses and retrieve the payments with each status
-        for (Empleado empleado : control.consultarEmpleados()) {
-            boolean isActivo = !empleado.getEstado();
-            boolean isInactivo = !isActivo;
-            boolean activosInactivosSeleccionados = cbActivos.isSelected() && cbInactivos.isSelected();
-            boolean soloActivosSeleccionados = cbActivos.isSelected() && isActivo;
-            boolean soloInactivosSeleccionados = cbInactivos.isSelected() && isInactivo;
+    // Loop over the selected statuses and retrieve the employees with each status
+    for (Empleado empleado : control.consultarEmpleados()) {
+        boolean isActivo = !empleado.getEstado();
+        boolean isInactivo = !isActivo;
+        boolean activosInactivosSeleccionados = cbActivos.isSelected() && cbInactivos.isSelected();
+        boolean soloActivosSeleccionados = cbActivos.isSelected() && isActivo;
+        boolean soloInactivosSeleccionados = cbInactivos.isSelected() && isInactivo;
 
-            if (activosInactivosSeleccionados || soloActivosSeleccionados || soloInactivosSeleccionados) {
-                modeloTabla.addRow(new Object[]{
-                    empleado.getId(),
-                    empleado.getNombre(),
-                    empleado.getApellidos(),
-                    empleado.getTelefono(),
-                    empleado.getCorreo(),
-                    empleado.getDomicilio(),
-                    empleado.getFechaNacimiento(),
-                    empleado.getRfc(),
-                    empleado.getEstado() == false ? "Activo" : "Inactivo"
-                });
+        if (activosInactivosSeleccionados || soloActivosSeleccionados || soloInactivosSeleccionados) {
+            if (isActivo) {
+                empleadosActivos.add(empleado);
+            } else {
+                empleadosInactivos.add(empleado);
             }
         }
-
-        //Actualizar lista de acuerdo a busqueda
-        if (txtBusqueda.getText().trim().length() != 0) {
-            TableRowSorter<TableModel> sorter = new TableRowSorter<>(modeloTabla);
-            RowFilter<Object, Object> filter = RowFilter.regexFilter("(?i)" + txtBusqueda.getText(), 1, Pattern.CASE_INSENSITIVE);
-            sorter.setRowFilter(filter);
-            tblEmpleados.setRowSorter(sorter);
-        } else {
-            tblEmpleados.setRowSorter(null);
-        }
-
-        //Actualizar vista de tabla
-        tblEmpleados.repaint();
     }
+
+    // Agregar empleados activos al modelo de tabla
+    for (Empleado empleado : empleadosActivos) {
+        modeloTabla.addRow(new Object[]{
+            empleado.getId(),
+            empleado.getNombre(),
+            empleado.getApellidos(),
+            empleado.getTelefono(),
+            empleado.getCorreo(),
+            empleado.getDomicilio(),
+            empleado.getFechaNacimiento(),
+            empleado.getRfc(),
+            "Activo"
+        });
+    }
+
+    // Agregar empleados inactivos al modelo de tabla
+    for (Empleado empleado : empleadosInactivos) {
+        modeloTabla.addRow(new Object[]{
+            empleado.getId(),
+            empleado.getNombre(),
+            empleado.getApellidos(),
+            empleado.getTelefono(),
+            empleado.getCorreo(),
+            empleado.getDomicilio(),
+            empleado.getFechaNacimiento(),
+            empleado.getRfc(),
+            "Inactivo"
+        });
+    }
+
+    //Actualizar lista de acuerdo a búsqueda
+    if (txtBusqueda.getText().trim().length() != 0) {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(modeloTabla);
+        RowFilter<Object, Object> filter = RowFilter.regexFilter("(?i)" + txtBusqueda.getText(), 1, Pattern.CASE_INSENSITIVE);
+        sorter.setRowFilter(filter);
+        tblEmpleados.setRowSorter(sorter);
+    } else {
+        tblEmpleados.setRowSorter(null);
+    }
+
+    //Actualizar vista de tabla
+    tblEmpleados.repaint();
+}
 
     private void activarListeners() {
         //Doble click a fila de tabla
@@ -229,6 +257,7 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
 
         btnAgregar.setText("Agregar");
         btnAgregar.setFocusable(false);
+        btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -251,14 +280,16 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
 
         btnActualizar.setText("Actualizar");
         btnActualizar.setFocusable(false);
+        btnActualizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Desactivar");
         btnCancelar.setFocusable(false);
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -267,6 +298,7 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
 
         btnConsultar.setText("Consultar");
         btnConsultar.setFocusable(false);
+        btnConsultar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultarActionPerformed(evt);
@@ -285,10 +317,11 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
         cbActivos.setSelected(true);
         cbActivos.setText("Activos");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Empleados");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         btnMenuPrincipal.setText("Menu Principal");
+        btnMenuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnMenuPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMenuPrincipalActionPerformed(evt);
@@ -311,12 +344,12 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBusqueda))
@@ -326,7 +359,7 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -339,15 +372,15 @@ public class MenuEmpleadosForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnBusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtBusqueda, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 

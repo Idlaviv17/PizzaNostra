@@ -84,9 +84,9 @@ public class EmpleadoDialog extends javax.swing.JDialog {
                 txtDomicilio.setText(empleado.getDomicilio());
                 dpFechaNacimiento.setDate(empleado.getFechaNacimiento());
                 txtRFC.setText(empleado.getRfc());
-                if(empleado.getEstado()){
+                if (empleado.getEstado()) {
                     cBoxEstado.setSelectedIndex(1);
-                } else{
+                } else {
                     cBoxEstado.setSelectedIndex(0);
                 }
             }
@@ -201,6 +201,15 @@ public class EmpleadoDialog extends javax.swing.JDialog {
             return false;
         }
 
+        if (operacion == AGREGAR) {
+            for (Empleado empleadoLista : control.consultarEmpleados()) {
+                if (this.txtRFC.getText().equalsIgnoreCase(empleadoLista.getRfc())) {
+                    JOptionPane.showMessageDialog(this, "El RFC está repetido", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            }
+        }
+        
         return true;
     }
 
@@ -391,6 +400,7 @@ public class EmpleadoDialog extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         guardar();
+        menuEmpleadosForm.llenarTabla();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed

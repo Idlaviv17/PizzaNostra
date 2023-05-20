@@ -49,10 +49,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnCancelar" min="-2" pref="83" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnActualizar" min="-2" pref="83" max="-2" attributes="0"/>
+                      <Component id="btnActualizar" min="-2" pref="95" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnConsultar" min="-2" pref="83" max="-2" attributes="0"/>
-                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                      <Component id="btnConsultar" min="-2" pref="93" max="-2" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                       <Component id="txtBusqueda" min="-2" pref="375" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnBusqueda" min="-2" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbEmpleadosInactivos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="btnFilaActivos" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnFilaActivos" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnMenuPrincipal" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
@@ -112,6 +112,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnAgregar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -145,6 +148,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnActualizar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Actualizar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -154,6 +160,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -165,6 +174,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnConsultar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Consultar"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
@@ -201,6 +213,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnFilaActivos">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar todos"/>
       </Properties>
       <Events>
@@ -236,6 +251,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnMenuPrincipal">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Menu Principal"/>
       </Properties>
       <Events>

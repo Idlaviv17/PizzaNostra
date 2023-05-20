@@ -2,11 +2,11 @@ package gui;
 
 import control.IControl;
 
-public class MenuPrincipal extends javax.swing.JFrame {
+public class MenuPrincipalForm extends javax.swing.JFrame {
 
     IControl control;
 
-    public MenuPrincipal(IControl control) {
+    public MenuPrincipalForm(IControl control) {
         initComponents();
         this.control = control;
 
@@ -34,7 +34,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         miEmpleados = new javax.swing.JMenuItem();
         miSalarios = new javax.swing.JMenuItem();
         miPagos = new javax.swing.JMenuItem();
-        acercaDe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,26 +73,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menuBar.add(secciones);
 
-        acercaDe.setText("Acerca de");
-        menuBar.add(acercaDe);
-
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(69, 69, 69)
                 .addComponent(imgLogo)
-                .addGap(55, 55, 55))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(imgLogo)
-                .addGap(38, 38, 38))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -116,7 +112,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miPagosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu acercaDe;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem miEmpleados;

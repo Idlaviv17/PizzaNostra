@@ -16,9 +16,9 @@ public class MenuSalariosForm extends javax.swing.JFrame {
 
     private final IControl control;
     private Salario salario;
-    private final MenuPrincipal menuPrincipal;
+    private final MenuPrincipalForm menuPrincipal;
 
-    public MenuSalariosForm(IControl control, MenuPrincipal menuPrincipal) {
+    public MenuSalariosForm(IControl control, MenuPrincipalForm menuPrincipal) {
         initComponents();
         this.setExtendedState(MenuSalariosForm.MAXIMIZED_BOTH);
         this.control = control;
@@ -257,6 +257,7 @@ public class MenuSalariosForm extends javax.swing.JFrame {
         lblOperacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblOperacion.setText("Agregar Salario");
 
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setFocusable(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -281,6 +282,7 @@ public class MenuSalariosForm extends javax.swing.JFrame {
 
         lblRol.setText("Rol");
 
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGuardar.setText("Agregar");
         btnGuardar.setFocusable(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -305,6 +307,7 @@ public class MenuSalariosForm extends javax.swing.JFrame {
 
         lblCosteHora.setText("Coste p/ hora");
 
+        btnActualizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         btnActualizar.setFocusable(false);
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -313,6 +316,7 @@ public class MenuSalariosForm extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setFocusable(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -321,6 +325,7 @@ public class MenuSalariosForm extends javax.swing.JFrame {
             }
         });
 
+        btnMenuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnMenuPrincipal.setText("Menu Principal");
         btnMenuPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -335,12 +340,12 @@ public class MenuSalariosForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(289, 289, 289)
+                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()

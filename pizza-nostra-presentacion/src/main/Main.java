@@ -33,7 +33,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 IControl control = new Control();
-                new MenuPrincipal(control).setVisible(true);
+                new MenuPrincipalForm(control).setVisible(true);
             }
         });
     }
